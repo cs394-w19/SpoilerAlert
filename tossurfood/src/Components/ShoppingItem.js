@@ -9,18 +9,17 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteRounded';
 //item name, days until expiration
 
-export default class FridgeItem extends React.Component{
+export default class ShoppingItem extends React.Component{
 	render() {
-        return(
+    return (
             <ListItem>
-                <ListItemText primary={this.props.item} secondary={this.props.date} />
+                <ListItemText primary={this.props.item}/>
                 <ListItemSecondaryAction>
 		              <i className="material-icons">
 			              delete
-		              </i>
+              		</i>
                 </ListItemSecondaryAction>
             </ListItem>
-
         )
     }
 }
