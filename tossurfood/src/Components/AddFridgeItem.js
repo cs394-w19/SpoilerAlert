@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
+import React from 'react';
 
 export default class AddFridgeItem extends React.Component{
-
 	render() {
     return (
       <div> Add to list

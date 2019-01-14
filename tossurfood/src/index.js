@@ -1,25 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import FridgeItem from './Components/FridgeItem';
-import FridgeList from './Components/FridgeList'
 import * as serviceWorker from './serviceWorker';
-import ShoppingList from './Components/ShoppingList';
-import Menu from './Components/Menu';
-import Settings from './Components/Settings';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
-
-
-const routing = (
-  <Router>
-    <div>
-      <Route path="/" component={App} />
-      <Route path="Components/FridgeItem" component={FridgeItem} />
-      <Route path="Components/ShoppingList" component={ShoppingList} />
-    </div>
-  </Router>
-)
+import App from './App';
 
 ReactDOM.render(
 <html>

@@ -5,7 +5,6 @@ import ShoppingList from './Components/ShoppingList.js'
 import Settings from './Components/Settings.js'
 import Menu from './Components/Menu.js'
 
-
 const PageEnum = {
 	FRIDGE : 1,
 	SHOPPING : 2,
@@ -39,21 +38,22 @@ class App extends Component {
   	let current_page = null;
 
   	switch(this.state.page) {
-  		case PageEnum.FRIDGE:
+			case PageEnum.FRIDGE:
       	current_page = <FridgeList/>
       	break;
 
-    	  case PageEnum.SHOPPING:
-    	    current_page = <ShoppingList/>
-    	    break;
+			case PageEnum.SHOPPING:
+				current_page = <ShoppingList/>
+				break;
 
-        case PageEnum.SETTINGS:
-          current_page = <Settings/>
-          break;
+			case PageEnum.SETTINGS:
+				current_page = <Settings/>
+				break;
 
-    	  default:
-    	    current_page = <FridgeList/>
-  	}
+			default:
+				current_page = <FridgeList/>
+		}
+		
     return (
       <div>
         <Menu enum={PageEnum} 
@@ -62,7 +62,6 @@ class App extends Component {
               state={this.state.showMenu}/>
         {current_page}
       </div>
-      
     );
   }
 }

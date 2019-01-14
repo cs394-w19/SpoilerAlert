@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import FridgeItem from './FridgeItem'
 import AddFridgeItem from './AddFridgeItem';
 
@@ -28,7 +28,7 @@ export default class FridgeList extends React.Component{
 	      <i className="material-icons" onClick={this.togglePopup.bind(this)}>
 		      add_box
 	      </i>
-              <div >{productList}</div>
+				<div >{productList}</div>
 	      {this.state.showAddItem ? 
           <AddFridgeItem closePopup={this.togglePopup.bind(this)}/>
           : null
