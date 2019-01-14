@@ -13,16 +13,24 @@ const PageEnum = {
 }
 
 class App extends Component {
+  toggleMenu() {
+		this.setState({
+			showMenu: !this.state.showMenu
+		});
+	}
+
   changePage(newPage) {
 		this.setState({
 			page: newPage
 		});
+		if (this.state.showMenu)
+		  this.toggleMenu();
 	}
 
   constructor() {
   	super();
-
   	this.state = {
+  		showMenu : false,
   		page : PageEnum.FRIDGE
   	}
   }
@@ -48,7 +56,10 @@ class App extends Component {
   	}
     return (
       <div>
-        <Menu enum={PageEnum} pageChange={this.changePage}/>
+        <Menu enum={PageEnum} 
+              toggleMenu={i => this.toggleMenu(i)} 
+              changePage={i => this.changePage(i)}
+              state={this.state.showMenu}/>
         {current_page}
       </div>
       
