@@ -8,7 +8,7 @@ export default class FridgeList extends React.Component{
 		super();
 		this.state = {
 			showAddItem: false,
-			items: data
+			items: data["fridge"]
 		};
 	}
 	
@@ -18,10 +18,18 @@ export default class FridgeList extends React.Component{
 		});
 	}
 
+	deleteItem = (item) => {
+		let items_copy = [...this.state.items];
+		delete items_copy[item];
+		this.setState({
+			items: items_copy
+		})
+	}
+
 	render() {
-		const myFood = this.state.items["fridge"];
+		const myFood = this.state.items;
 		const productList = Object.entries(myFood).map(([product, date]) => (
-			<FridgeItem item={product} date={date}></FridgeItem>
+			<FridgeItem item={product} date={date} deleteItem={i => this.deleteItem(i)}></FridgeItem>
 			)
 		);
 
