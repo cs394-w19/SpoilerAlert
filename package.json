@@ -2,6 +2,7 @@
   "name": "tossurfood",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://cs394-w19.github.io/TossUrFood",
   "dependencies": {
     "@material-ui/core": "^3.8.3",
     "@material-ui/icons": "^3.0.2",
@@ -11,6 +12,8 @@
     "react-scripts": "2.1.3"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
