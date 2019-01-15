@@ -4,19 +4,21 @@
 
 .menu {
 	float: left;
-	
 
 }
 
 .material-icons.add-button {
 	float: right;
-	padding-right: 10px;
+	padding-right: 1%;
 }
 
 .center {
 	display: block;
 	text-align: center;
 	background-color: white;
+	position: absolute;
+	z-index: -1;
+	width: 100%;
 }
 
 li {
@@ -29,5 +31,11 @@ li {
 }
 
 button {
-	border: 1px solid black;
+	border: 0.5px solid black;
+}
+
+.list-modify-button {
+	display: block;
+	float: right;
+	margin-right: 1%;
 }
