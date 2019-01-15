@@ -1,10 +1,29 @@
 import React from 'react';
 
 export default class AddFridgeItem extends React.Component{
-	render() {
+  add_and_close = (name, days) => {
+    this.props.addItem(name, parseInt(days, 10));
+    this.props.closePopup();
+    return
+  }
+
+  render() {
     return (
-      <div> Add to list
-	      <button onClick={this.props.closePopup}>Done</button>
+      <div className="popup">
+        <div className="popup_inner"> 
+          <div className="title">Add to Fridge</div>
+          <br />
+          <div>Food Name: <input type="text" id="food_name"/></div>
+          <br />
+          <div>Days Til Expiration:
+            <input type="number" min="1" id="days_til"/>
+          </div>
+          <br />
+          <button className="popup_button left" onClick={() => this.add_and_close(document.getElementById('food_name').value, document.getElementById('days_til').value)}>
+            Done
+            </button>
+	        <button className="popup_button right" onClick={this.props.closePopup}>Cancel</button>
+        </div>
       </div>
 
 		)

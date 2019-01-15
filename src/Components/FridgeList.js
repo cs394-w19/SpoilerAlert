@@ -21,15 +21,32 @@ export default class FridgeList extends React.Component{
 	deleteItem = (item) => {
 		let items_copy = [...this.state.items];
 		delete items_copy[item];
-		this.setState({
-			items: items_copy
-		})
-	}
+    this.setState({
+      items: items_copy
+    });
+  }
+
+  addItem = (item_name, days_til) => {
+    let new_items = {};
+    let added = false;
+    Object.entries(this.state.items).map(([n, d]) => {
+      if ((!added) && (d > days_til)) {
+        new_items[item_name] = days_til;
+        added = true;
+      }
+      new_items[n] = d;
+      return null //This is suppress a warning associated with map
+    });
+
+    this.setState({
+      items: new_items
+      });
+  }
 
 	render() {
 		const myFood = this.state.items;
-		const productList = Object.entries(myFood).map(([product, date]) => (
-			<FridgeItem item={product} date={date} deleteItem={i => this.deleteItem(i)}></FridgeItem>
+    const productList = Object.entries(myFood).map(([product, date]) => (
+      <FridgeItem item={product} date={date} deleteItem={i => this.deleteItem(i)}></FridgeItem>
 			)
 		);
 
@@ -40,7 +57,7 @@ export default class FridgeList extends React.Component{
 	      </i>
 				<div >{productList}</div>
 	      {this.state.showAddItem ? 
-          <AddFridgeItem closePopup={this.togglePopup.bind(this)}/>
+          <AddFridgeItem closePopup={this.togglePopup.bind(this)} addItem={this.addItem}/>
           : null
         }
         <button onClick = {() => alert("Milk is expired")}> Check for Expired Items </button>
