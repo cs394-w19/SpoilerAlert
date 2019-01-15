@@ -1,4 +1,5 @@
 import React	from 'react';
+import '../App.css';
 
 export default class Menu extends React.Component{
 	
@@ -11,10 +12,10 @@ export default class Menu extends React.Component{
 	      	</i>
         </div>
         {this.props.state ? 
-				<div>
-					<div><button onClick={() => this.props.changePage(this.props.enum.FRIDGE)}>Fridge List</button></div>
-	  	    <div><button onClick={() => this.props.changePage(this.props.enum.SHOPPING)}>Shopping List</button></div>
-		    	<div><button onClick={() => this.props.changePage(this.props.enum.SETTINGS)}>Settings</button></div>
+				<div className = "menu">
+					<div><button className = "menubutton" onClick={() => this.props.changePage(this.props.enum.FRIDGE)}>Fridge List</button></div>
+	  	    <div><button className = "menubutton" onClick={() => this.props.changePage(this.props.enum.SHOPPING)}>Shopping List</button></div>
+		    	<div><button className = "menubutton" onClick={() => this.props.changePage(this.props.enum.SETTINGS)}>Settings</button></div>
 				</div> 	
 				: null
         }	

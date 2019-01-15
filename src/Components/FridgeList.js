@@ -17,15 +17,15 @@ export default class FridgeList extends React.Component{
 	}
 
 	render() {
-		const myFood = {"apples":"3 days", "milk":"7 days", "eggs":"15 days"};
+		const myFood = {"milk":"0 days", "apples":"3 days", "eggs":"15 days"};
 		const productList = Object.entries(myFood).map(([product, date]) => (
 			<FridgeItem item={product} date={date}></FridgeItem>
 			)
 		);
 
     return (
-      <div> Fridge List
-	      <i className="material-icons" onClick={this.togglePopup.bind(this)}>
+      <div className = "center"> Fridge List
+	      <i className="material-icons add-button" onClick={this.togglePopup.bind(this)}>
 		      add_box
 	      </i>
 				<div >{productList}</div>
@@ -33,6 +33,7 @@ export default class FridgeList extends React.Component{
           <AddFridgeItem closePopup={this.togglePopup.bind(this)}/>
           : null
         }
+        <button onClick = {() => alert("Milk is expired")}> Check for Expired Items </button>
       </div>
 		)
 	}

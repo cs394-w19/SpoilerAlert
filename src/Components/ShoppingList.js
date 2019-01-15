@@ -1,6 +1,7 @@
 import React from 'react';
 import ShoppingItem from './ShoppingItem';
 import AddShoppingItem from './AddShoppingItem';
+import '../App.css';
 
 export default class ShoppingList extends React.Component{
 	constructor() {
@@ -24,8 +25,8 @@ export default class ShoppingList extends React.Component{
 		);
 
     return (
-		<div> Shopping List 
-		  <i className="material-icons" onClick={this.togglePopup.bind(this)}>
+		<div className = "center"> Shopping List 
+		  <i className="material-icons add-button" onClick={this.togglePopup.bind(this)}>
 		      add_box
 	      </i>		
 	      <div>{productList}</div>

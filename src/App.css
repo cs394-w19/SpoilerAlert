@@ -1,0 +1,33 @@
+.menubutton {
+
+}
+
+.menu {
+	float: left;
+	
+
+}
+
+.material-icons.add-button {
+	float: right;
+	padding-right: 10px;
+}
+
+.center {
+	display: block;
+	text-align: center;
+	background-color: white;
+}
+
+li {
+	list-style-type: none;
+}
+
+.app {
+	display: block;
+	background-color: rgb(215, 204, 255);
+}
+
+button {
+	border: 1px solid black;
+}

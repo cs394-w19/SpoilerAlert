@@ -55,8 +55,8 @@ class App extends Component {
 		}
 		
     return (
-      <div>
-        <Menu enum={PageEnum} 
+      <div className = "app">
+        <Menu className = "menu" enum={PageEnum} 
               toggleMenu={i => this.toggleMenu(i)} 
               changePage={i => this.changePage(i)}
               state={this.state.showMenu}/>
