@@ -9,7 +9,7 @@ export default class ShoppingList extends React.Component{
 		super();
 		this.state = {
 			showAddItem: false,
-			items: data
+			items: data["shopping"] //array of food
 		};
 	}	
 	
@@ -19,10 +19,24 @@ export default class ShoppingList extends React.Component{
 		});
 	}
 
+	delShopItem = (item) => {
+		var array = [...this.state.items];
+		console.log(array);
+		var index = array.indexOf(item)
+		console.log(item);
+		if (index !== -1) {
+			array.splice(index, 1);
+			console.log(array);
+			this.setState({items: array});
+		}
+
+		
+	}
+
 	render() {
-		const myFood = data["shopping"];
+		const myFood = this.state.items;
 		const productList = myFood.map(product => (
-			<ShoppingItem item={product}></ShoppingItem>
+			<ShoppingItem item={product} func={this.delShopItem}></ShoppingItem>
 			)
 		);
 

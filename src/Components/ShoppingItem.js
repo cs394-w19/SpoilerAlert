@@ -3,15 +3,19 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/DeleteRounded';
+
 export default class ShoppingItem extends React.Component{
 	render() {
     return (
             <ListItem>
                 <ListItemText primary={this.props.item}/>
                 <ListItemSecondaryAction>
-		              <i className="material-icons">
-			              delete
-              		</i>
+                    <IconButton onClick={() => this.props.func(this.props.item)}>
+                        <DeleteIcon />
+                    </IconButton>
                 </ListItemSecondaryAction>
             </ListItem>
         )
