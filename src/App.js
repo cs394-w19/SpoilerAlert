@@ -39,8 +39,8 @@ class App extends Component {
 
   	switch(this.state.page) {
 			case PageEnum.FRIDGE:
-      	current_page = <FridgeList/>
-      	break;
+      			current_page = <FridgeList/>
+      			break;
 
 			case PageEnum.SHOPPING:
 				current_page = <ShoppingList/>
@@ -55,8 +55,8 @@ class App extends Component {
 		}
 		
     return (
-      <div className = "app">
-        <Menu className = "menu" enum={PageEnum} 
+      <div className="app">
+        <Menu className="menu" enum={PageEnum} 
               toggleMenu={i => this.toggleMenu(i)} 
               changePage={i => this.changePage(i)}
               state={this.state.showMenu}/>

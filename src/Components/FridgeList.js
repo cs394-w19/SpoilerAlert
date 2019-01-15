@@ -1,12 +1,14 @@
 import React from 'react';
 import FridgeItem from './FridgeItem'
 import AddFridgeItem from './AddFridgeItem';
+import data from '../data/fridge.json'
 
 export default class FridgeList extends React.Component{
 	constructor() {
 		super();
 		this.state = {
-			showAddItem: false
+			showAddItem: false,
+			items: data
 		};
 	}
 	
@@ -17,14 +19,14 @@ export default class FridgeList extends React.Component{
 	}
 
 	render() {
-		const myFood = {"milk":"0 days", "apples":"3 days", "eggs":"15 days"};
+		const myFood = this.state.items["fridge"];
 		const productList = Object.entries(myFood).map(([product, date]) => (
 			<FridgeItem item={product} date={date}></FridgeItem>
 			)
 		);
 
     return (
-      <div className = "center"> Fridge List
+      <div className="center"> Fridge List
 	      <i className="material-icons add-button" onClick={this.togglePopup.bind(this)}>
 		      add_box
 	      </i>
