@@ -29,10 +29,6 @@ export default class FridgeList extends React.Component{
     addItem = (item_name, days_til) => {
     	let new_items = {};
     	let added = false;
-    	if (Object.keys(this.state.items).length === 0) {
-        		new_items[item_name] = days_til;
-      	}
-      		
     	Object.entries(this.state.items).map(([n, d]) => {
       		if ((!added) && (d > days_til)) {
         		new_items[item_name] = days_til;
@@ -41,6 +37,10 @@ export default class FridgeList extends React.Component{
       		new_items[n] = d;
       		return null //This is suppress a warning associated with map
     	});
+
+      if (!added) {
+        new_items[item_name] = days_til;
+      }
 
     	this.setState({
       		items: new_items
