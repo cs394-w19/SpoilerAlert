@@ -3,7 +3,7 @@ import React from 'react';
 export default class AddShoppingItem extends React.Component{
   
   add_and_close = (name) => {
-    if (name != "") {
+    if (name !== "") {
       this.props.addItem(name);
     }
     this.props.closePopup();

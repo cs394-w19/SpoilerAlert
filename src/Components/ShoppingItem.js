@@ -3,7 +3,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteRounded';
 
