@@ -22,7 +22,7 @@ export default class FridgeItem extends React.Component{
             <ListItem>
                 <ListItemText primary={this.props.item} secondary={this.prettyDate(this.props.date)} />
                 <ListItemSecondaryAction>
-		              <i className="material-icons" onClick={() => this.props.deleteItem(this.props.item)}>
+		              <i className="material-icons" onClick={() => this.props.delFridgeItem(this.props.item)}>
 			              delete
 		              </i>
                 </ListItemSecondaryAction>

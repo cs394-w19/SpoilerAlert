@@ -18,50 +18,50 @@ export default class FridgeList extends React.Component{
 		});
 	}
 
-	deleteItem = (item) => {
-		let items_copy = [...this.state.items];
+	delFridgeItem = (item) => {
+		let items_copy = this.state.items;
 		delete items_copy[item];
-    this.setState({
-      items: items_copy
-    });
-  }
+    	this.setState({
+    		items: items_copy
+    	});
+  	}
 
-  addItem = (item_name, days_til) => {
-    let new_items = {};
-    let added = false;
-    Object.entries(this.state.items).map(([n, d]) => {
-      if ((!added) && (d > days_til)) {
-        new_items[item_name] = days_til;
-        added = true;
-      }
-      new_items[n] = d;
-      return null //This is suppress a warning associated with map
-    });
+    addItem = (item_name, days_til) => {
+    	let new_items = {};
+    	let added = false;
+    	Object.entries(this.state.items).map(([n, d]) => {
+      		if ((!added) && (d > days_til)) {
+        		new_items[item_name] = days_til;
+        		added = true;
+      		}
+      		new_items[n] = d;
+      		return null //This is suppress a warning associated with map
+    	});
 
-    this.setState({
-      items: new_items
-      });
-  }
+    	this.setState({
+      		items: new_items
+      	});
+  	}
 
 	render() {
 		const myFood = this.state.items;
-    const productList = Object.entries(myFood).map(([product, date]) => (
-      <FridgeItem item={product} date={date} deleteItem={i => this.deleteItem(i)}></FridgeItem>
+		const productList = Object.entries(myFood).map(([product, date]) => (
+	    <FridgeItem item={product} date={date} delFridgeItem={i => this.delFridgeItem(i)}></FridgeItem>
 			)
 		);
 
-    return (
-      <div className="center"> Fridge List
-	      <i className="material-icons add-button" onClick={this.togglePopup.bind(this)}>
-		      add_box
-	      </i>
-				<div >{productList}</div>
-	      {this.state.showAddItem ? 
-          <AddFridgeItem closePopup={this.togglePopup.bind(this)} addItem={this.addItem}/>
-          : null
-        }
-        <button onClick = {() => alert("Milk is expired")}> Check for Expired Items </button>
-      </div>
+	    return (
+	      <div className="center"> Fridge List
+		      <i className="material-icons add-button" onClick={this.togglePopup.bind(this)}>
+			      add_box
+		      </i>
+					<div >{productList}</div>
+		      {this.state.showAddItem ? 
+	          <AddFridgeItem closePopup={this.togglePopup.bind(this)} addItem={this.addItem}/>
+	          : null
+	        }
+	        <button onClick = {() => alert("Milk is expired")}> Check for Expired Items </button>
+	      </div>
 		)
 	}
 }
