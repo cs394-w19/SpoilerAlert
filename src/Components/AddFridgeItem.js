@@ -2,7 +2,9 @@ import React from 'react';
 
 export default class AddFridgeItem extends React.Component{
   add_and_close = (name, days) => {
-    this.props.addItem(name, parseInt(days, 10));
+    if (name !== "" && days !== "") {
+      this.props.addItem(name, parseInt(days, 10));
+    }
     this.props.closePopup();
     return
   }
