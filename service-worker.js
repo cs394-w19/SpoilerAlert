@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/TossUrFood/precache-manifest.27c59b0ced22e332c3970599a674f605.js"
+  "/TossUrFood/precache-manifest.cc84cb32b59384b2395a669760f165d8.js"
 );
 
 workbox.clientsClaim();
