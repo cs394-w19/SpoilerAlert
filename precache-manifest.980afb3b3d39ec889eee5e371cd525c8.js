@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/SpoilerAlert/static/css/main.91226b8d.chunk.css"
   },
   {
-    "revision": "469d4379d686e1624532e0a3cacd0fed",
+    "revision": "b80019489eef24bfb4f691dfab9fdbd9",
     "url": "/SpoilerAlert/index.html"
   }
 ];
