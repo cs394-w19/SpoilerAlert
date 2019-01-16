@@ -20,23 +20,20 @@ export default class ShoppingList extends React.Component{
 	}
 
 	addItem = (item_name) => {
-		let new_items = [...this.state.items];
-		new_items.push(item_name);
-	
-		this.setState({
-		  items: new_items
-		  });
+		let items_copy = this.state.items;
+		items_copy.push(item_name);
+		this.setState({items: items_copy});
 	  }
 
 	delShopItem = (item) => {
-		var array = [...this.state.items];
+		let items_copy = this.state.items;
 		//console.log(array);
-		var index = array.indexOf(item)
+		var index = items_copy.indexOf(item)
 		//console.log(item);
 		if (index !== -1) {
-			array.splice(index, 1);
-			//console.log(array);
-			this.setState({items: array});
+			items_copy.splice(index, 1);
+			console.log(items_copy);
+			this.setState({items: items_copy});
 		}
 	}
 
