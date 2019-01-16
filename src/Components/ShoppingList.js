@@ -19,18 +19,25 @@ export default class ShoppingList extends React.Component{
 		});
 	}
 
+	addItem = (item_name) => {
+		let new_items = [...this.state.items];
+		new_items.push(item_name);
+	
+		this.setState({
+		  items: new_items
+		  });
+	  }
+
 	delShopItem = (item) => {
 		var array = [...this.state.items];
-		console.log(array);
+		//console.log(array);
 		var index = array.indexOf(item)
-		console.log(item);
+		//console.log(item);
 		if (index !== -1) {
 			array.splice(index, 1);
-			console.log(array);
+			//console.log(array);
 			this.setState({items: array});
 		}
-
-		
 	}
 
 	render() {
@@ -48,7 +55,7 @@ export default class ShoppingList extends React.Component{
 	      <div>{productList}</div>
 	      <button className="list-modify-button">Add entire Fridge List</button>
 	      {this.state.showAddItem ? 
-            <AddShoppingItem closePopup={this.togglePopup.bind(this)} />
+            <AddShoppingItem closePopup={this.togglePopup.bind(this)} addItem={this.addItem} />
 			: null
 			}
 		</div>
