@@ -4,6 +4,8 @@ import FridgeList from './Components/FridgeList.js'
 import ShoppingList from './Components/ShoppingList.js'
 import Settings from './Components/Settings.js'
 import Menu from './Components/Menu.js'
+import NewMenu from './Components/NewMenu.js';
+import Drawer from '@material-ui/core/Drawer';
 
 const PageEnum = {
 	FRIDGE : 1,
@@ -12,35 +14,35 @@ const PageEnum = {
 }
 
 class App extends Component {
-  toggleMenu() {
+	toggleMenu() {
 		this.setState({
 			showMenu: !this.state.showMenu
 		});
 	}
 
-  changePage(newPage) {
+	changePage(newPage) {
 		this.setState({
 			page: newPage
 		});
 		if (this.state.showMenu)
-		  this.toggleMenu();
+			this.toggleMenu();
 	}
 
-  constructor() {
-  	super();
-  	this.state = {
-  		showMenu : false,
-  		page : PageEnum.FRIDGE
-  	}
-  }
+	constructor() {
+		super();
+		this.state = {
+			showMenu : false,
+			page : PageEnum.FRIDGE
+		}
+	}
 
-  render() {
-  	let current_page = null;
+	render() {
+		let current_page = null;
 
-  	switch(this.state.page) {
+		switch(this.state.page) {
 			case PageEnum.FRIDGE:
-      			current_page = <FridgeList/>
-      			break;
+						current_page = <FridgeList/>
+						break;
 
 			case PageEnum.SHOPPING:
 				current_page = <ShoppingList/>
@@ -54,16 +56,16 @@ class App extends Component {
 				current_page = <FridgeList/>
 		}
 		
-    return (
-      <div className="app">
-        <Menu className="menu" enum={PageEnum} 
-              toggleMenu={i => this.toggleMenu(i)} 
-              changePage={i => this.changePage(i)}
-              state={this.state.showMenu}/>
-        {current_page}
-      </div>
-    );
-  }
+		return (
+			<div className="app">
+				<NewMenu className="menu" enum={PageEnum} 
+							toggleMenu={i => this.toggleMenu(i)} 
+							changePage={i => this.changePage(i)}
+							state={this.state.showMenu}></NewMenu>
+				{current_page}
+			</div>
+		);
+	}
 }
 
 export default App;
