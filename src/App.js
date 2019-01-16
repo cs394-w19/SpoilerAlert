@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 import FridgeList from './Components/FridgeList.js'
 import ShoppingList from './Components/ShoppingList.js'
 import Settings from './Components/Settings.js'
@@ -29,7 +29,8 @@ class App extends Component {
 	}
 
 	constructor() {
-		super();
+    super();
+    console.log("Here");
 		this.state = {
 			showMenu : false,
 			page : PageEnum.FRIDGE
