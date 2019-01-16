@@ -50,7 +50,7 @@ export default class ShoppingList extends React.Component{
 		      add_box
 	      </i>		
 	      <div>{productList}</div>
-	      <button className="list-modify-button">Add entire Fridge List</button>
+	     
 	      {this.state.showAddItem ? 
             <AddShoppingItem closePopup={this.togglePopup.bind(this)} addItem={this.addItem} />
 			: null
