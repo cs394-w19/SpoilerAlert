@@ -5,6 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
+import Icon from '@material-ui/core/Icon';
+import MenuIcon from '@material-ui/icons/Menu'
 
 export default class TempDrawer extends React.Component {
   state = {
@@ -20,7 +22,7 @@ export default class TempDrawer extends React.Component {
   render() {
     return(
       <div>
-        <Button onClick={this.toggleDrawer('left', true)}>Menu</Button>
+        <Button onClick={this.toggleDrawer('left', true)}><MenuIcon/></Button>
         <Drawer anchor="left" open={this.state.left} onClose={this.toggleDrawer('left', false)}>
               <div >
                 <div><Button className="menubutton" onClick={() => this.props.changePage(this.props.enum.FRIDGE)}>Fridge List</Button></div>
