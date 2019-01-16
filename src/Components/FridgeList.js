@@ -29,6 +29,11 @@ export default class FridgeList extends React.Component{
     addItem = (item_name, days_til) => {
     	let new_items = {};
     	let added = false;
+    	if (Object.keys(this.state.items).length === 0) {
+        		new_items[item_name] = days_til;
+        		added = true;
+      	}
+      		
     	Object.entries(this.state.items).map(([n, d]) => {
       		if ((!added) && (d > days_til)) {
         		new_items[item_name] = days_til;
