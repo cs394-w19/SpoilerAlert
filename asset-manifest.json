@@ -1,13 +1,13 @@
 {
-  "main.css": "/SpoilerAlert/static/css/main.91226b8d.chunk.css",
-  "main.js": "/SpoilerAlert/static/js/main.28af7ed1.chunk.js",
-  "main.js.map": "/SpoilerAlert/static/js/main.28af7ed1.chunk.js.map",
-  "static/js/1.551480c5.chunk.js": "/SpoilerAlert/static/js/1.551480c5.chunk.js",
-  "static/js/1.551480c5.chunk.js.map": "/SpoilerAlert/static/js/1.551480c5.chunk.js.map",
-  "runtime~main.js": "/SpoilerAlert/static/js/runtime~main.fa0534b3.js",
-  "runtime~main.js.map": "/SpoilerAlert/static/js/runtime~main.fa0534b3.js.map",
-  "static/css/main.91226b8d.chunk.css.map": "/SpoilerAlert/static/css/main.91226b8d.chunk.css.map",
-  "index.html": "/SpoilerAlert/index.html",
-  "precache-manifest.382c42c4ebbf56759145a6e8c15a7bea.js": "/SpoilerAlert/precache-manifest.382c42c4ebbf56759145a6e8c15a7bea.js",
-  "service-worker.js": "/SpoilerAlert/service-worker.js"
+  "main.css": "/TossUrFood/static/css/main.b382ac18.chunk.css",
+  "main.js": "/TossUrFood/static/js/main.4c0c40d7.chunk.js",
+  "main.js.map": "/TossUrFood/static/js/main.4c0c40d7.chunk.js.map",
+  "static/js/1.4787fc15.chunk.js": "/TossUrFood/static/js/1.4787fc15.chunk.js",
+  "static/js/1.4787fc15.chunk.js.map": "/TossUrFood/static/js/1.4787fc15.chunk.js.map",
+  "runtime~main.js": "/TossUrFood/static/js/runtime~main.ca4e28eb.js",
+  "runtime~main.js.map": "/TossUrFood/static/js/runtime~main.ca4e28eb.js.map",
+  "static/css/main.b382ac18.chunk.css.map": "/TossUrFood/static/css/main.b382ac18.chunk.css.map",
+  "index.html": "/TossUrFood/index.html",
+  "precache-manifest.c994c3d31fd07476593d78b1af50a36d.js": "/TossUrFood/precache-manifest.c994c3d31fd07476593d78b1af50a36d.js",
+  "service-worker.js": "/TossUrFood/service-worker.js"
 }
