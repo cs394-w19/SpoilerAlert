@@ -12,7 +12,7 @@ export default class ShoppingItem extends React.Component{
             <ListItem>
                 <ListItemText primary={this.props.item}/>
                 <ListItemSecondaryAction>
-                    <IconButton onClick={() => this.props.func(this.props.item)}>
+                    <IconButton onClick={() => this.props.delItem(this.props.item)}>
                         <DeleteIcon />
                     </IconButton>
                 </ListItemSecondaryAction>

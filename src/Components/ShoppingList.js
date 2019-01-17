@@ -5,11 +5,10 @@ import '../App.scss';
 import data from '../data/shopping.json';
 
 export default class ShoppingList extends React.Component{
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			showAddItem: false,
-			items: data["shopping"] //array of food
 		};
 	}	
 	
@@ -19,28 +18,10 @@ export default class ShoppingList extends React.Component{
 		});
 	}
 
-	addItem = (item_name) => {
-		let items_copy = this.state.items;
-		items_copy.push(item_name);
-		this.setState({items: items_copy});
-	  }
-
-	delShopItem = (item) => {
-		let items_copy = this.state.items;
-		//console.log(array);
-		var index = items_copy.indexOf(item)
-		//console.log(item);
-		if (index !== -1) {
-			items_copy.splice(index, 1);
-			console.log(items_copy);
-			this.setState({items: items_copy});
-		}
-	}
-
 	render() {
-		const myFood = this.state.items;
+		const myFood = this.props.items;
 		const productList = myFood.map(product => (
-			<ShoppingItem item={product} func={this.delShopItem}></ShoppingItem>
+			<ShoppingItem item={product} delItem={this.props.delItem}></ShoppingItem>
 			)
 		);
 
@@ -52,7 +33,7 @@ export default class ShoppingList extends React.Component{
 	      <div>{productList}</div>
 	     
 	      {this.state.showAddItem ? 
-            <AddShoppingItem closePopup={this.togglePopup.bind(this)} addItem={this.addItem} />
+            <AddShoppingItem closePopup={this.togglePopup.bind(this)} addItem={this.props.addItem} />
 			: null
 			}
 		</div>

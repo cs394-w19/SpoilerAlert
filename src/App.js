@@ -6,6 +6,7 @@ import Settings from './Components/Settings.js'
 import Menu from './Components/Menu.js'
 import NewMenu from './Components/NewMenu.js';
 import Drawer from '@material-ui/core/Drawer';
+import shoppingData from './data/shopping.json';
 
 const PageEnum = {
 	FRIDGE : 1,
@@ -28,12 +29,31 @@ class App extends Component {
 			this.toggleMenu();
 	}
 
+	addShopItem = (item_name) => {
+		let items_copy = this.state.shoppingItems;
+		items_copy.push(item_name);
+		this.setState({shoppingItems: items_copy});
+	}
+
+	delShopItem = (item) => {
+		let items_copy = this.state.shoppingItems;
+		//console.log(array);
+		var index = items_copy.indexOf(item)
+		//console.log(item);
+		if (index !== -1) {
+			items_copy.splice(index, 1);
+			console.log(items_copy);
+			this.setState({shoppingItems: items_copy});
+		}
+	}
+
 	constructor() {
     super();
     console.log("Here");
 		this.state = {
 			showMenu : false,
-			page : PageEnum.FRIDGE
+			page : PageEnum.FRIDGE,
+			shoppingItems : shoppingData["shopping"]
 		}
 	}
 
@@ -42,11 +62,13 @@ class App extends Component {
 
 		switch(this.state.page) {
 			case PageEnum.FRIDGE:
-						current_page = <FridgeList/>
-						break;
+				current_page = <FridgeList addShopItem={this.addShopItem}/>
+				break;
 
 			case PageEnum.SHOPPING:
-				current_page = <ShoppingList/>
+				current_page = <ShoppingList items={this.state.shoppingItems}
+											 addItem={this.addShopItem}
+											 delItem={this.delShopItem}/>
 				break;
 
 			case PageEnum.SETTINGS:
@@ -60,9 +82,9 @@ class App extends Component {
 		return (
 			<div className="app">
 				<NewMenu className="menu" enum={PageEnum} 
-							toggleMenu={i => this.toggleMenu(i)} 
-							changePage={i => this.changePage(i)}
-							state={this.state.showMenu}></NewMenu>
+						 toggleMenu={i => this.toggleMenu(i)} 
+						 changePage={i => this.changePage(i)}
+						 state={this.state.showMenu}></NewMenu>
 				{current_page}
 			</div>
 		);

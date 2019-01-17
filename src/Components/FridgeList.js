@@ -4,8 +4,8 @@ import AddFridgeItem from './AddFridgeItem';
 import data from '../data/fridge.json'
 
 export default class FridgeList extends React.Component{
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			showAddItem: false,
 			items: data["fridge"]
@@ -60,10 +60,9 @@ export default class FridgeList extends React.Component{
 			alert(expired_items + " have expired.\nAdded to shopping list");
 		for (let i = 0; i < expired_items.length; i++)
 		{
+			this.props.addShopItem(expired_items[i]);
 			for (let j = 0; j < Object.keys(this.state.items).length; j++)
 			{
-				console.log(Object.keys(this.state.items)[j]);
-				console.log(expired_items[i]);
 				if (Object.keys(this.state.items)[j] === expired_items[i])
 					this.delFridgeItem(Object.keys(this.state.items)[j]);
 			}
