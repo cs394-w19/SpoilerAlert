@@ -50,14 +50,24 @@ export default class FridgeList extends React.Component{
   	checkExpiry = () => {
   		let expired_items = [];
   		for (const [key, value] of Object.entries(this.state.items)) {
-		  if(value === 0)
+		  if(value <= 0)
 		  	expired_items.push(key);
 		};
 		console.log(expired_items);
 		if(expired_items.length === 1)
-			alert(expired_items + " has expired.");
+			alert(expired_items + " has expired.\nAdded to shopping list");
 		else
-			alert(expired_items + " have expired.");
+			alert(expired_items + " have expired.\nAdded to shopping list");
+		for (let i = 0; i < expired_items.length; i++)
+		{
+			for (let j = 0; j < Object.keys(this.state.items).length; j++)
+			{
+				console.log(Object.keys(this.state.items)[j]);
+				console.log(expired_items[i]);
+				if (Object.keys(this.state.items)[j] === expired_items[i])
+					this.delFridgeItem(Object.keys(this.state.items)[j]);
+			}
+		}
   	}
 
 	render() {
@@ -77,7 +87,7 @@ export default class FridgeList extends React.Component{
 	          <AddFridgeItem closePopup={this.togglePopup.bind(this)} addItem={this.addItem}/>
 	          : null
 	        }
-	        <button onClick = {this.checkExpiry.bind(this)}> Check for Expired Items </button>
+	        <button onClick = {this.checkExpiry.bind(this)}> Add Expired Items to Shopping </button>
 	      </div>
 		)
 	}
