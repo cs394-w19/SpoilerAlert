@@ -24,7 +24,7 @@ export default class TempDrawer extends React.Component {
       <div>
         <Button onClick={this.toggleDrawer('left', true)}><MenuIcon/></Button>
         <Drawer anchor="left" open={this.state.left} onClose={this.toggleDrawer('left', false)}>
-              <div >
+              <div onClick={this.toggleDrawer('left', false)}>
                 <div><Button className="menubutton" onClick={() => this.props.changePage(this.props.enum.FRIDGE)}>Fridge List</Button></div>
                 <div><Button className="menubutton" onClick={() => this.props.changePage(this.props.enum.SHOPPING)}>Shopping List</Button></div>
                 <div><Button className="menubutton" onClick={() => this.props.changePage(this.props.enum.SETTINGS)}>Settings</Button></div>
