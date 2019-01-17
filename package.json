@@ -1,8 +1,8 @@
 {
-  "name": "tossurfood",
+  "name": "spoileralert",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://cs394-w19.github.io/TossUrFood",
+  "homepage": "https://cs394-w19.github.io/SpoilerAlert",
   "dependencies": {
     "@material-ui/core": "^3.8.3",
     "@material-ui/icons": "^3.0.2",
