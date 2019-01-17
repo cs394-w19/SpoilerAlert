@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/TossUrFood/precache-manifest.c994c3d31fd07476593d78b1af50a36d.js"
+  "/SpoilerAlert/precache-manifest.b040476f9a5d8fcd9361dbd695281a3c.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/TossUrFood/index.html", {
+workbox.routing.registerNavigationRoute("/SpoilerAlert/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
