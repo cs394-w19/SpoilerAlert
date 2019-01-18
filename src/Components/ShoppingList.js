@@ -1,7 +1,6 @@
 import React from 'react';
 import ShoppingItem from './ShoppingItem';
 import AddShoppingItem from './AddShoppingItem';
-import '../App.scss';
 import data from '../data/shopping.json';
 
 export default class ShoppingList extends React.Component{
