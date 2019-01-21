@@ -2,6 +2,7 @@ import React from 'react';
 import ShoppingItem from './ShoppingItem';
 import AddShoppingItem from './AddShoppingItem';
 import data from '../data/shopping.json';
+import Button from '@material-ui/core/Button';
 
 export default class ShoppingList extends React.Component{
 	constructor(props) {
@@ -35,6 +36,7 @@ export default class ShoppingList extends React.Component{
             <AddShoppingItem closePopup={this.togglePopup.bind(this)} addItem={this.props.addItem} />
 			: null
 			}
+			<Button></Button>
 		</div>
 		)
 	}

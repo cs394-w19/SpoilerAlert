@@ -15,13 +15,29 @@ const PageEnum = {
 }
 
 class App extends Component {
-	toggleMenu() {
+	/*constructor() {
+    	super();
+			this.state = {
+				showMenu : false,
+				page : PageEnum.FRIDGE,
+				shoppingItems : shoppingData["shopping"],
+				fridgeItems : {}
+			};
+	}*/
+	state = {
+		showMenu : false,
+		page : PageEnum.FRIDGE,
+		shoppingItems : shoppingData["shopping"],
+		fridgeItems : {}
+	};
+
+	toggleMenu = () => {
 		this.setState({
 			showMenu: !this.state.showMenu
-		});
+		})
 	}
 
-	changePage(newPage) {
+	changePage = (newPage) => {
 		this.setState({
 			page: newPage
 		});
@@ -47,22 +63,69 @@ class App extends Component {
 		}
 	}
 
-	constructor() {
-    super();
-    console.log("Here");
-		this.state = {
-			showMenu : false,
-			page : PageEnum.FRIDGE,
-			shoppingItems : shoppingData["shopping"]
+	delFridgeItem = (item) => {
+		let items_copy = this.state.fridgeItems;
+		delete items_copy[item];
+    	this.setState({
+    		fridgeItems: items_copy
+    	})
+  	}
+
+  	addFridgeItem = (item_name, days_til) => {
+    	let new_items = {};
+    	let added = false;
+    	Object.entries(this.state.fridgeItems).map(([n, d]) => {
+      		if ((!added) && (d > days_til)) {
+        		new_items[item_name] = days_til;
+        		added = true;
+      		}
+      		new_items[n] = d;
+      		return null //This is suppress a warning associated with map
+    	});
+
+		if (!added) {
+			new_items[item_name] = days_til;
 		}
-	}
+
+		this.setState({
+			fridgeItems: new_items
+		});
+  	}
+
+  	checkExpiry = () => {
+  		var expired_items = [];
+  		for (const [key, value] of Object.entries(this.state.fridgeItems)) {
+		  if(value <= 0)
+		  	expired_items.push(key);
+		};
+		console.log(expired_items.length);
+		if(expired_items.length == 1)
+			alert(expired_items + " has expired.\nAdded to shopping list");
+		else if(expired_items.length > 1)	
+			alert(expired_items + " have expired.\nAdded to shopping list");
+		
+		for (let i = 0; i < expired_items.length; i++)
+		{
+			this.addShopItem(expired_items[i]);
+			for (let j = 0; j < Object.keys(this.state.fridgeItems).length; j++)
+			{
+				if (Object.keys(this.state.fridgeItems)[j] === expired_items[i])
+					this.delFridgeItem(Object.keys(this.state.fridgeItems)[j]);
+			}
+		}
+  	};
+
+	
 
 	render() {
 		let current_page = null;
 
 		switch(this.state.page) {
 			case PageEnum.FRIDGE:
-				current_page = <FridgeList addShopItem={this.addShopItem}/>
+				current_page = <FridgeList items={this.state.fridgeItems} 
+											delItem={this.delFridgeItem} 
+											addItem={this.addFridgeItem}
+											checkExpiry={this.checkExpiry}/>
 				break;
 
 			case PageEnum.SHOPPING:
