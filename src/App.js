@@ -101,8 +101,12 @@ class App extends Component {
 		console.log(expired_items.length);
 		if(expired_items.length == 1)
 			alert(expired_items + " has expired.\nAdded to shopping list");
-		else if(expired_items.length > 1)	
-			alert(expired_items + " have expired.\nAdded to shopping list");
+		else if(expired_items.length > 1) {
+			let exp_string = ""
+			expired_items.forEach((item) =>
+				exp_string += item.charAt(0).toUpperCase() + item.slice(1) + ", ")
+			alert(exp_string.substring(0, exp_string.length-2) + " have expired.\nAdded to shopping list");
+		}
 		
 		for (let i = 0; i < expired_items.length; i++)
 		{

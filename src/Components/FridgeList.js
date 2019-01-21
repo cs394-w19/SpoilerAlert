@@ -16,16 +16,9 @@ export default class FridgeList extends React.Component{
 			showAddItem: !this.state.showAddItem
 		});
 	}
-
-
-    
-
-  	
-
 	render() {
-		const myFood = this.props.items;
 		const productList = Object.entries(this.props.items).map(([product, date]) => (
-	    <FridgeItem item={product} date={date} delFridgeItem={i => this.delItem(i)}></FridgeItem>
+	    <FridgeItem item={product} date={date} delFridgeItem={i => this.props.delItem(i)}></FridgeItem>
 			)
 		);
 
