@@ -11,17 +11,22 @@ export default class FridgeItem extends React.Component{
     prettyDate(date) {
         if (date === 1)
         {
-            return String(date) + " day";
+            return String(date) + " day until expiration date";
         }
         else
         {
-            return String(date) + " days";
+            return String(date) + " days until expiration date";
         }
     }
 
-	render() {
-        return(
-            <ListItem>
+    render() {
+
+      let item_class = "list-item";
+      if (this.props.date <= 0){
+        item_class = "list-item yellow";
+      }
+      return (
+            <ListItem class={item_class}>
                 <ListItemText primary={this.props.item} secondary={this.prettyDate(this.props.date)} />
                 <ListItemSecondaryAction>
                   <IconButton onClick={() => this.props.delFridgeItem(this.props.item)}>

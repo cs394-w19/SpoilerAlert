@@ -23,6 +23,18 @@
 	padding-right: 1%;
 }
 
+.list-item {
+  text-align: left;
+  padding-left: 10px;
+  padding-top: 10px;
+  border-bottom: 1px solid lightgrey;
+  height: 60px;
+}
+
+  .list-item.yellow {
+    background-color: lightyellow;
+  }
+
 .center {
 	display: block;
 	text-align: center;
