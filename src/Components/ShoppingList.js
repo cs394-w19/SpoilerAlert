@@ -10,23 +10,34 @@ export default class ShoppingList extends React.Component{
 		super(props);
 		this.state = {
 			showAddItem: false,
+			showToFridgePopup: false,
 			selectedItem: "",
 		};
 		this.togglePopup = this.togglePopup.bind(this);
+		this.toggleMoveToFridgePopup = this.toggleMoveToFridgePopup.bind(this);
 		this.fillInput = this.fillInput.bind(this);
 	}	
 	
 	togglePopup() {
+		console.log("SHIT!!!!");
 		this.setState({
-			showAddItem: !this.state.showAddItem
+			showAddItem: !this.state.showAddItem,
 		});
 	}
+
+	toggleMoveToFridgePopup() {
+		console.log("FUCK!!!!");
+		this.setState({
+			showToFridgePopup: !this.state.showToFridgePopup
+		});
+	}
+
 	fillInput(name) {
 		//gets the name of selected item and auto-fills the add item form
 		this.setState({
 			selectedItem: name,
 		})
-		this.togglePopup();
+		this.toggleMoveToFridgePopup();
 	}
 
 	handleChange(event) {
@@ -40,7 +51,7 @@ export default class ShoppingList extends React.Component{
 		const productList = myFood.map(product => (
 			<ShoppingItem item={product} 
 						fillInput={this.fillInput}
-						togglePopup={this.togglePopup} 
+						
 						addToFridge={this.props.addToFridge} 
 						delItem={this.props.delItem}></ShoppingItem>
 			)
@@ -57,9 +68,9 @@ export default class ShoppingList extends React.Component{
 				<AddShoppingItem closePopup={this.togglePopup.bind(this)} addItem={this.props.addItem} />
 				: null
 			}
-			{this.state.showAddItem ? 
+			{this.state.showToFridgePopup ? 
 				<AddItemFromShopping inputValue={this.state.selectedItem} 
-									closePopup={this.togglePopup.bind(this)} 
+									closePopup={this.toggleMoveToFridgePopup.bind(this)} 
 									addItem={this.props.addToFridge}
 									handleChange={this.handleChange}/>
 				: null
