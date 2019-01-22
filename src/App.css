@@ -1,5 +1,16 @@
-.menubutton {
+.settings-text {
+  color: black;
+  padding-left: 23px;
+  padding-bottom: 25px;
+  padding-top: 10px;
+  font-family: "Tahoma";
+  font-size: 16px;
+  background-color: white;
+}
 
+.buttons-styling {
+  background-color: white;
+  padding-left: 17px;
 }
 
 .menu {
