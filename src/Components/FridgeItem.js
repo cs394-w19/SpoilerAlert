@@ -2,6 +2,8 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/DeleteRounded';
 
 //item name, days until expiration
 
@@ -22,9 +24,9 @@ export default class FridgeItem extends React.Component{
             <ListItem>
                 <ListItemText primary={this.props.item} secondary={this.prettyDate(this.props.date)} />
                 <ListItemSecondaryAction>
-		              <i className="material-icons" onClick={() => this.props.delFridgeItem(this.props.item)}>
-			              delete
-		              </i>
+                  <IconButton onClick={() => this.props.delFridgeItem(this.props.item)}>
+                    <DeleteIcon/>
+		              </IconButton>
                 </ListItemSecondaryAction>
             </ListItem>
 
