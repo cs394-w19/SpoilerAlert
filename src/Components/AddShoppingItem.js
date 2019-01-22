@@ -16,7 +16,7 @@ export default class AddShoppingItem extends React.Component{
         <div className="popup_inner">
           <div className="title">Add to Shopping List</div>
           <br />
-          <div>Food Name: <input type="date" id="food_name"/></div>
+          <div>Food Name: <input type="text" id="food_name"/></div>
           <br />
           <button className="popup_button left" onClick={() => this.add_and_close(document.getElementById('food_name').value)}>
           Done
