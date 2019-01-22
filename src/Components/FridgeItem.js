@@ -26,7 +26,7 @@ export default class FridgeItem extends React.Component{
         item_class = "list-item yellow";
       }
       return (
-            <ListItem class={item_class}>
+            <ListItem className={item_class}>
                 <ListItemText primary={this.props.item} secondary={this.prettyDate(this.props.date)} />
                 <ListItemSecondaryAction>
                   <IconButton onClick={() => this.props.delFridgeItem(this.props.item)}>
