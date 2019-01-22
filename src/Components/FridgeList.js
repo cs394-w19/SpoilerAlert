@@ -1,7 +1,6 @@
 import React from 'react';
 import FridgeItem from './FridgeItem'
 import AddFridgeItem from './AddFridgeItem';
-import data from '../data/fridge.json'
 
 export default class FridgeList extends React.Component{
 	constructor(props) {

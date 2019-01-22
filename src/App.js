@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
 import FridgeList from './Components/FridgeList.js'
 import ShoppingList from './Components/ShoppingList.js'
 import Settings from './Components/Settings.js'
 import Menu from './Components/Menu.js'
-import NewMenu from './Components/NewMenu.js';
-import Drawer from '@material-ui/core/Drawer';
-import shoppingData from './data/shopping.json';
+import NewMenu from './Components/NewMenu.js'
+import Drawer from '@material-ui/core/Drawer'
+import shoppingData from './data/shopping.json'
+import fridgeData from './data/fridge.json'
 
 const PageEnum = {
 	FRIDGE : 1,
@@ -28,7 +29,7 @@ class App extends Component {
 		showMenu : false,
 		page : PageEnum.FRIDGE,
 		shoppingItems : shoppingData["shopping"],
-		fridgeItems : {}
+		fridgeItems : fridgeData["fridge"]
 	};
 
 	toggleMenu = () => {
