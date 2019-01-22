@@ -90,24 +90,24 @@ class TextFields extends React.Component {
           id="standard-name"
           label="Name"
           className={classes.textField}
-          value={this.state.name}
-          onChange={this.handleChange("name")}
+         // value={this.state.name}
+         // onChange={this.handleChange("name")}
           margin="normal"
         />
         <TextField
           id="standard-name"
           label="Phone Number"
           className={classes.textField}
-          value={this.state.name}
-          onChange={this.handleChange("name")}
+          //value={this.state.name}
+          //onChange={this.handleChange("name")}
           margin="normal"
         />
         <TextField
           id="standard-name"
           label="Email Address"
           className={classes.textField}
-          value={this.state.name}
-          onChange={this.handleChange("name")}
+         // value={this.state.name}
+         // onChange={this.handleChange("name")}
           margin="normal"
         />
         
