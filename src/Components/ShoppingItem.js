@@ -7,9 +7,12 @@ import DeleteIcon from '@material-ui/icons/DeleteRounded';
 import CartPlusIcon from '@material-ui/icons/AddShoppingCart'
 
 
-
 export default class ShoppingItem extends React.Component{
 	
+	delete_confirm = (item) => {
+		this.props.toggleDelConfirm(item);
+	}
+
 	render() {
 
 	let item_class = "list-item";
@@ -18,7 +21,7 @@ export default class ShoppingItem extends React.Component{
 			<ListItem className={item_class}>
 				<ListItemText primary={this.props.item}/>
 				<ListItemSecondaryAction>
-					<IconButton onClick={() => this.props.delItem(this.props.item)}>
+					<IconButton onClick={() => this.delete_confirm(this.props.item)}>
 						<DeleteIcon />
 					</IconButton>
 					<IconButton onClick={() => this.props.fillInput(this.props.item)}>

@@ -19,6 +19,10 @@ export default class FridgeItem extends React.Component{
         }
     }
 
+    delete_confirm = (item) => {
+		this.props.toggleDelConfirm(item);
+	}
+
     render() {
 
       let item_class = "list-item";
@@ -29,12 +33,11 @@ export default class FridgeItem extends React.Component{
             <ListItem className={item_class}>
                 <ListItemText primary={this.props.item} secondary={this.prettyDate(this.props.date)} />
                 <ListItemSecondaryAction>
-                  <IconButton onClick={() => this.props.delFridgeItem(this.props.item)}>
+                  <IconButton onClick={() => this.delete_confirm(this.props.item)}>
                     <DeleteIcon/>
 		              </IconButton>
                 </ListItemSecondaryAction>
             </ListItem>
-
         )
     }
 }

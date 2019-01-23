@@ -1,9 +1,10 @@
-import React from 'react';
-import ShoppingItem from './ShoppingItem';
-import AddShoppingItem from './AddShoppingItem';
+import React from 'react'
+import ShoppingItem from './ShoppingItem'
+import AddShoppingItem from './AddShoppingItem'
 import AddItemFromShopping from './AddItemFromShopping'
-import data from '../data/shopping.json';
-import Button from '@material-ui/core/Button';
+import DelConfirm from './DelConfirm.js'
+import data from '../data/shopping.json'
+import Button from '@material-ui/core/Button'
 
 export default class ShoppingList extends React.Component{
 	constructor(props) {
@@ -11,24 +12,32 @@ export default class ShoppingList extends React.Component{
 		this.state = {
 			showAddItem: false,
 			showToFridgePopup: false,
+			showDelConfirm: false,
+			item_to_delete: null,
 			selectedItem: "",
 		};
-		this.togglePopup = this.togglePopup.bind(this);
+		this.toggleAddItem = this.toggleAddItem.bind(this);
 		this.toggleMoveToFridgePopup = this.toggleMoveToFridgePopup.bind(this);
+		this.toggleDelConfirm = this.toggleDelConfirm.bind(this);
 		this.fillInput = this.fillInput.bind(this);
 	}	
 	
-	togglePopup() {
-		console.log("SHIT!!!!");
+	toggleAddItem() {
 		this.setState({
 			showAddItem: !this.state.showAddItem,
 		});
 	}
 
 	toggleMoveToFridgePopup() {
-		console.log("FUCK!!!!");
 		this.setState({
 			showToFridgePopup: !this.state.showToFridgePopup
+		});
+	}
+
+	toggleDelConfirm(item) {
+		this.setState({
+			showDelConfirm: !this.state.showDelConfirm,
+			item_to_delete: item
 		});
 	}
 
@@ -51,31 +60,37 @@ export default class ShoppingList extends React.Component{
 		const productList = myFood.map(product => (
 			<ShoppingItem item={product} 
 						fillInput={this.fillInput}
-						
-						addToFridge={this.props.addToFridge} 
-						delItem={this.props.delItem}></ShoppingItem>
+						addToFridge={this.props.addToFridge}
+						toggleDelConfirm={this.toggleDelConfirm}></ShoppingItem>
 			)
 		);
 
 	return (
 		<div className="center"> Shopping List 
-			<i className="material-icons add-button" onClick={this.togglePopup.bind(this)}>
+			<i className="material-icons add-button" onClick={this.toggleAddItem.bind(this)}>
 			  add_box
 		 	</i>		
 		 	<div>{productList}</div>
 		 
 			{this.state.showAddItem ? 
-				<AddShoppingItem closePopup={this.togglePopup.bind(this)} addItem={this.props.addItem} />
+				<AddShoppingItem closePopup={this.toggleAddItem.bind(this)}
+								 addItem={this.props.addItem} />
 				: null
 			}
 			{this.state.showToFridgePopup ? 
 				<AddItemFromShopping inputValue={this.state.selectedItem} 
 									closePopup={this.toggleMoveToFridgePopup.bind(this)} 
 									addItem={this.props.addToFridge}
-									handleChange={this.handleChange}/>
+									handleChange={this.handleChange} />
 				: null
 			}
-			<Button></Button>
+
+			{this.state.showDelConfirm ?
+				<DelConfirm closePopup={this.toggleDelConfirm.bind(this)}
+							delItem={this.props.delItem}
+							item={this.state.item_to_delete} />
+				: null
+			}
 		</div>
 		)
 	}
