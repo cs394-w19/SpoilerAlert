@@ -8,6 +8,18 @@ import NewMenu from './Components/NewMenu.js'
 import Drawer from '@material-ui/core/Drawer'
 import shoppingData from './data/shopping.json'
 import fridgeData from './data/fridge.json'
+//import firebase from "firebase"
+
+/*
+var config = {
+    apiKey: "AIzaSyDAnOBtoL7VHdV-VYd2Tcr0FLv5elDaN8A",
+    authDomain: "spoileralert-394.firebaseapp.com",
+    databaseURL: "https://spoileralert-394.firebaseio.com",
+    storageBucket: "spoileralert-394.appspot.com",
+};
+firebase.initializeApp(config);
+var rootRef = firebase.database().ref;
+*/
 
 const PageEnum = {
 	FRIDGE : 1,
