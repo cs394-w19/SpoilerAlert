@@ -8,9 +8,22 @@ import CartPlusIcon from '@material-ui/icons/AddShoppingCart'
 
 
 export default class ShoppingItem extends React.Component{
-	
+	constructor(props) {
+		super(props);
+		this.state = {
+			showEdit: false
+		};
+		this.toggleEdit = this.toggleEdit.bind(this);
+	}
+
 	delete_confirm = (item) => {
 		this.props.toggleDelConfirm(item);
+	}
+
+	toggleEdit() {
+		this.setState({
+			showEdit: !this.state.showEdit
+		});
 	}
 
 	render() {
@@ -18,7 +31,9 @@ export default class ShoppingItem extends React.Component{
 	let item_class = "list-item";
 		
 	return (
-			<ListItem className={item_class}>
+		<>
+		{!this.state.showEdit ?
+			<ListItem className={item_class} onClick={this.toggleEdit}>
 				<ListItemText primary={this.props.item}/>
 				<ListItemSecondaryAction>
 					<IconButton onClick={() => this.delete_confirm(this.props.item)}>
@@ -27,9 +42,18 @@ export default class ShoppingItem extends React.Component{
 					<IconButton onClick={() => this.props.fillInput(this.props.item)}>
 						<CartPlusIcon />
 					</IconButton>
-			
 				</ListItemSecondaryAction>
 			</ListItem>
+			:
+			<><br/>
+            <form>
+            	Item: <input type="text" defaultValue={this.props.item}/>
+            </form><br/>
+            <button className="popup_button left" onClick={this.toggleEdit}>Done</button>
+            <button className="popup_button right" onClick={this.toggleEdit}>Cancel</button>
+            </>
+		}
+		</>
 		)
 	}
 }

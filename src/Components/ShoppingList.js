@@ -58,10 +58,12 @@ export default class ShoppingList extends React.Component{
 	render() {
 		const myFood = this.props.items;
 		const productList = myFood.map(product => (
+			<>
 			<ShoppingItem item={product} 
 						fillInput={this.fillInput}
 						addToFridge={this.props.addToFridge}
-						toggleDelConfirm={this.toggleDelConfirm}></ShoppingItem>
+						toggleDelConfirm={this.toggleDelConfirm}></ShoppingItem><br/>
+			</>
 			)
 		);
 

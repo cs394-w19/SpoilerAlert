@@ -30,9 +30,11 @@ export default class FridgeList extends React.Component{
 
 	render() {
 		const productList = Object.entries(this.props.items).map(([product, date]) => (
+		<>
 	    <FridgeItem item={product}
 	    			date={date}
-	    			toggleDelConfirm={this.toggleDelConfirm}></FridgeItem>
+	    			toggleDelConfirm={this.toggleDelConfirm}></FridgeItem><br/>
+	    </>
 			)
 		);
 
