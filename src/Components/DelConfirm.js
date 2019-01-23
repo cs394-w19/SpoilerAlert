@@ -13,7 +13,7 @@ export default class DelConfirm extends React.Component {
           <div className="title">Remove {this.props.item}?</div>
           <br />
           <button className="popup_button left" onClick={() => this.del_and_close(this.props.item)}>
-            Done
+            Ok
             </button>
 	        <button className="popup_button right" onClick={this.props.closePopup}>Cancel</button>
         </div>
