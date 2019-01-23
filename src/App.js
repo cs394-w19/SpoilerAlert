@@ -77,9 +77,10 @@ class App extends Component {
 	}
 
 	addShopItem = (item_name) => {
-		let items_copy = this.state.shoppingItems;
-		items_copy.push(item_name);
-		this.setState({shoppingItems: items_copy});
+		this.state.shoppingItems.length = 0;
+		let ref = firebase.database().ref().child("shopping");
+		let writeLoc = ref.push();
+		writeLoc.set(item_name);
 	}
 
 	delShopItem = (item) => {
