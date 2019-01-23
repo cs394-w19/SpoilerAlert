@@ -11,9 +11,11 @@ import CartPlusIcon from '@material-ui/icons/AddShoppingCart'
 export default class ShoppingItem extends React.Component{
 	
 	render() {
+
+	let item_class = "list-item";
 		
 	return (
-			<ListItem>
+			<ListItem className={item_class}>
 				<ListItemText primary={this.props.item}/>
 				<ListItemSecondaryAction>
 					<IconButton onClick={() => this.props.delItem(this.props.item)}>
