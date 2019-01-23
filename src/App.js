@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Children } from 'react'
 import './App.css'
 import FridgeList from './Components/FridgeList.js'
 import ShoppingList from './Components/ShoppingList.js'
@@ -8,9 +8,8 @@ import NewMenu from './Components/NewMenu.js'
 import Drawer from '@material-ui/core/Drawer'
 import shoppingData from './data/shopping.json'
 import fridgeData from './data/fridge.json'
-//import firebase from "firebase"
+import firebase from "firebase"
 
-/*
 var config = {
     apiKey: "AIzaSyDAnOBtoL7VHdV-VYd2Tcr0FLv5elDaN8A",
     authDomain: "spoileralert-394.firebaseapp.com",
@@ -18,8 +17,6 @@ var config = {
     storageBucket: "spoileralert-394.appspot.com",
 };
 firebase.initializeApp(config);
-var rootRef = firebase.database().ref;
-*/
 
 const PageEnum = {
 	FRIDGE : 1,
@@ -28,21 +25,42 @@ const PageEnum = {
 }
 
 class App extends Component {
-	/*constructor() {
-    	super();
-			this.state = {
-				showMenu : false,
-				page : PageEnum.FRIDGE,
-				shoppingItems : shoppingData["shopping"],
-				fridgeItems : {}
-			};
-	}*/
+	constructor() {
+		super();
+
+		let self = this; // needed in callbacks
+
+		let fridgeBuf = {}; 
+		firebase.database().ref('fridge').orderByValue().on('value', function(snapshot) {
+			snapshot.forEach((child) => {
+				fridgeBuf[child.key] = child.val();
+				self.setState({page : PageEnum.FRIDGE}); // retrieval is async, so set again to display landing page properly
+			})
+		});
+		
+		let shoppingBuf = [];
+		firebase.database().ref('shopping').on('value', function(snapshot) {
+			snapshot.forEach((child) => {
+				shoppingBuf.push(child.val());
+			})
+		});
+
+		this.state = {
+			showMenu : false,
+			page : PageEnum.FRIDGE,
+			shoppingItems : shoppingBuf,
+			fridgeItems : fridgeBuf
+		};
+	}
+	
+	/*
 	state = {
 		showMenu : false,
 		page : PageEnum.FRIDGE,
 		shoppingItems : shoppingData["shopping"],
-		fridgeItems : fridgeData["fridge"]
+		fridgeItems : fridgeItems
 	};
+	*/
 
 	toggleMenu = () => {
 		this.setState({
@@ -163,7 +181,10 @@ class App extends Component {
 				break;
 
 			default:
-				current_page = <FridgeList/>
+				current_page = <FridgeList items={this.state.fridgeItems} 
+											delItem={this.delFridgeItem} 
+											addItem={this.addFridgeItem}
+											checkExpiry={this.checkExpiry}/>
 		}
 		
 		return (
