@@ -55,7 +55,6 @@ export default class FridgeList extends React.Component{
 							  item={this.state.item_to_delete} />
 				  : null
 			  }
-	        <button onClick = {this.props.checkExpiry}> Add Expired Items to Shopping </button>
 	      </div>
 		)
 	}
