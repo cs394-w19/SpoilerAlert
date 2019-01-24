@@ -78,21 +78,17 @@ class App extends Component {
 
 	addShopItem = (item_name) => {
 		this.state.shoppingItems.length = 0;
-		let ref = firebase.database().ref().child("shopping");
-		let writeLoc = ref.push();
+		let shoppingRef = firebase.database().ref("shopping");
+		let writeLoc = shoppingRef.push();
 		writeLoc.set(item_name);
 	}
 
 	delShopItem = (item) => {
-		let items_copy = this.state.shoppingItems;
-		//console.log(array);
-		var index = items_copy.indexOf(item)
-		//console.log(item);
-		if (index !== -1) {
-			items_copy.splice(index, 1);
-			console.log(items_copy);
-			this.setState({shoppingItems: items_copy});
-		}
+		this.state.shoppingItems.length = 0;
+		let shoppingRef = firebase.database().ref("shopping");
+		shoppingRef.orderByValue().equalTo(item).on('child_added', function(snapshot) {
+			snapshot.ref.remove();
+		})
 	}
 
 	shoppingToFridge = (item_name, days_til) => {
