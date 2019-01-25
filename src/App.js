@@ -72,7 +72,7 @@ class App extends Component {
 		items_copy.push(item_name);
 		this.setState({shoppingItems: items_copy});
 
-		let shoppingRef = firebase.database().ref("shopping");
+		let shoppingRef = firebase.database().ref('shopping');
 		let writeLoc = shoppingRef.push();
 		writeLoc.set(item_name);
 	}
@@ -85,7 +85,7 @@ class App extends Component {
 			this.setState({shoppingItems: items_copy});
 		}
 
-		let shoppingRef = firebase.database().ref("shopping");
+		let shoppingRef = firebase.database().ref('shopping');
 		shoppingRef.orderByValue().equalTo(item).once('child_added', function(snapshot) {
 			snapshot.ref.remove();
 		})
@@ -100,9 +100,9 @@ class App extends Component {
 	delFridgeItem = (item) => {
 		let items_copy = this.state.fridgeItems;
 		delete items_copy[item];
-    	this.setState({
-    		fridgeItems: items_copy
-    	})
+		this.setState({fridgeItems: items_copy})
+		
+		firebase.database().ref('fridge').child(item).remove();
   	}
 
   	addFridgeItem = (item_name, days_til) => {
@@ -124,6 +124,8 @@ class App extends Component {
 		this.setState({
 			fridgeItems: new_items
 		});
+
+		firebase.database().ref('fridge').update({[item_name] : days_til});
   	}
 
   	checkExpiry = () => {
