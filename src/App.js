@@ -1,13 +1,10 @@
-import React, { Component, Children } from 'react'
+import React, { Component } from 'react'
 import './App.css'
 import FridgeList from './Components/FridgeList.js'
 import ShoppingList from './Components/ShoppingList.js'
 import Settings from './Components/Settings.js'
 import Menu from './Components/Menu.js'
 import NewMenu from './Components/NewMenu.js'
-import Drawer from '@material-ui/core/Drawer'
-import shoppingData from './data/shopping.json'
-import fridgeData from './data/fridge.json'
 import firebase from "firebase"
 
 var config = {
@@ -143,7 +140,7 @@ class App extends Component {
 		if(expired_items.length == 1)
 			alert(expired_items + " has expired.\nAdded to shopping list");
 		else if(expired_items.length > 1) {
-			let exp_string = ""
+			let exp_string = "";
 			expired_items.forEach((item) =>
 				exp_string += item.charAt(0).toUpperCase() + item.slice(1) + ", ")
 			alert(exp_string.substring(0, exp_string.length-2) + " have expired.\nAdded to shopping list");

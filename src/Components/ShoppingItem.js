@@ -40,7 +40,7 @@ export default class ShoppingItem extends React.Component{
 						<DeleteIcon />
 					</IconButton>
 					<IconButton onClick={() => this.props.fillInput(this.props.item)}>
-						<img src="https://icongr.am/material/fridge-outline.svg"></img>
+						<img src="https://icongr.am/material/fridge-outline.svg" alt=""></img>
 					</IconButton>
 				</ListItemSecondaryAction>
 			</ListItem>

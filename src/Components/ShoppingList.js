@@ -3,8 +3,6 @@ import ShoppingItem from './ShoppingItem'
 import AddShoppingItem from './AddShoppingItem'
 import AddItemFromShopping from './AddItemFromShopping'
 import DelConfirm from './DelConfirm.js'
-import data from '../data/shopping.json'
-import Button from '@material-ui/core/Button'
 
 export default class ShoppingList extends React.Component{
 	constructor(props) {

@@ -1,11 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import Icon from '@material-ui/core/Icon';
 import MenuIcon from '@material-ui/icons/Menu'
 
 export default class TempDrawer extends React.Component {
