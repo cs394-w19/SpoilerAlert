@@ -31,7 +31,7 @@ class App extends Component {
 		let self = this; // needed in callbacks
 
 		let fridgeBuf = {}; 
-		firebase.database().ref('fridge').orderByValue().on('value', function(snapshot) {
+		firebase.database().ref('fridge').orderByValue().once('value', function(snapshot) {
 			snapshot.forEach((child) => {
 				fridgeBuf[child.key] = child.val();
 				self.setState({page : PageEnum.FRIDGE}); // retrieval is async, so set again to display landing page properly
@@ -39,7 +39,7 @@ class App extends Component {
 		});
 		
 		let shoppingBuf = [];
-		firebase.database().ref('shopping').on('value', function(snapshot) {
+		firebase.database().ref('shopping').once('value', function(snapshot) {
 			snapshot.forEach((child) => {
 				shoppingBuf.push(child.val());
 			})
@@ -52,15 +52,6 @@ class App extends Component {
 			fridgeItems : fridgeBuf
 		};
 	}
-	
-	/*
-	state = {
-		showMenu : false,
-		page : PageEnum.FRIDGE,
-		shoppingItems : shoppingData["shopping"],
-		fridgeItems : fridgeItems
-	};
-	*/
 
 	toggleMenu = () => {
 		this.setState({
@@ -77,16 +68,25 @@ class App extends Component {
 	}
 
 	addShopItem = (item_name) => {
-		this.state.shoppingItems.length = 0;
+		let items_copy = this.state.shoppingItems;
+		items_copy.push(item_name);
+		this.setState({shoppingItems: items_copy});
+
 		let shoppingRef = firebase.database().ref("shopping");
 		let writeLoc = shoppingRef.push();
 		writeLoc.set(item_name);
 	}
 
 	delShopItem = (item) => {
-		this.state.shoppingItems.length = 0;
+		let items_copy = this.state.shoppingItems;
+		let index = items_copy.indexOf(item)
+		if (index !== -1) {
+			items_copy.splice(index, 1);
+			this.setState({shoppingItems: items_copy});
+		}
+
 		let shoppingRef = firebase.database().ref("shopping");
-		shoppingRef.orderByValue().equalTo(item).on('child_added', function(snapshot) {
+		shoppingRef.orderByValue().equalTo(item).once('child_added', function(snapshot) {
 			snapshot.ref.remove();
 		})
 	}
