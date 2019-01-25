@@ -88,46 +88,61 @@ class App extends Component {
 		})
 	}
 
-	shoppingToFridge = (item_name, days_til) => {
+	shoppingToFridge = (item_name, quantity, days_til) => {
 		//add item from the shopping list to fridge....probably need to rename
 		this.delShopItem(item_name);
-		this.addFridgeItem(item_name, days_til);
+		this.addFridgeItem(item_name, quantity, days_til);
 	}
 
 	fridgeToShopping = (item_name) => {
-		this.delFridgeItem(item_name);
+		//this.delFridgeItem(item_name);
 		this.addShopItem(item_name);
 	}
 
-	delFridgeItem = (item) => {
+	delFridgeItem = (item, quantity) => {
+
 		let items_copy = this.state.fridgeItems;
-		delete items_copy[item];
+		let data = items_copy[item];
+		let item_quantity = data[0];
+		let item_date = data[1];
+		if(item_quantity == quantity) {
+			delete items_copy[item];
+		}
+		else {
+			let new_quantity = item_quantity - quantity;
+			items_copy[item] = [new_quantity,item_date]
+		}
 		this.setState({fridgeItems: items_copy})
 		
 		firebase.database().ref('fridge').child(item).remove();
   	}
 
-  	addFridgeItem = (item_name, days_til) => {
+  	addFridgeItem = (item_name, quantity, days_til) => {
     	let new_items = {};
     	let added = false;
+    	quantity = parseInt(quantity, 10);
     	Object.entries(this.state.fridgeItems).map(([n, d]) => {
-      		if ((!added) && (d > days_til)) {
-        		new_items[item_name] = days_til;
-        		added = true;
-      		}
       		new_items[n] = d;
-      		return null //This is suppress a warning associated with map
+      		//return null //This is suppress a warning associated with map
     	});
-
-		if (!added) {
-			new_items[item_name] = days_til;
+		if (item_name in new_items) {
+			let cur_item = new_items[item_name];
+			let new_quantity = cur_item[0] + quantity;
+			let cur_date = cur_item[1];
+			if(days_til > cur_date)
+				new_items[item_name] = [new_quantity, days_til]; //only change expiry date if the newly purchased item has a later expiry
+			else
+				new_items[item_name] = [new_quantity, cur_date];
 		}
+		else
+			new_items[item_name] = [quantity, days_til];
+
 
 		this.setState({
 			fridgeItems: new_items
 		});
 
-		firebase.database().ref('fridge').update({[item_name] : days_til});
+		firebase.database().ref('fridge').update({[item_name] : [quantity, days_til]});
   	}
 
   	checkExpiry = () => {

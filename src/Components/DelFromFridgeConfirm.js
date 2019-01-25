@@ -2,8 +2,10 @@ import React from 'react'
 
 export default class DelConfirm extends React.Component {
 	del_and_close = (item, quantity) => {
-		this.props.delItem(item, quantity);
-		this.props.closePopup();
+    if(String(quantity).length > 0 ) {
+  		this.props.delItem(item, quantity);
+  		this.props.closePopup();
+    }
 	}
 
 	render() {

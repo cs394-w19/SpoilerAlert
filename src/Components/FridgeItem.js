@@ -20,11 +20,11 @@ export default class FridgeItem extends React.Component{
     prettyDate(date) {
         if (date === 1)
         {
-            return String(date) + " day until expiration date";
+            return "Expiring in " + String(date) + " day.";
         }
         else
         {
-            return String(date) + " days until expiration date";
+            return "Expiring in " +  String(date) + " days.";
         }
     }
 
@@ -50,6 +50,10 @@ export default class FridgeItem extends React.Component{
 		this.props.toggleDelConfirm(item);
 	}
 
+    prettyInfo(quantity, days_til) {
+        return "Quantity: " + String(quantity) + ". " + this.prettyDate(days_til)
+    }
+
 	toggleEdit() {
 		this.setState({
 			showEdit: !this.state.showEdit
@@ -66,7 +70,7 @@ export default class FridgeItem extends React.Component{
       	<>
   		{!this.state.showEdit ?
             <ListItem className={item_class} onClick={this.toggleEdit}>
-                <ListItemText primary={this.props.item} secondary={this.prettyDate(this.props.date)} />
+                <ListItemText primary={this.props.item} secondary={this.prettyInfo(this.props.quantity, this.props.date)} />
                 <ListItemSecondaryAction>
                   <IconButton onClick={() => this.delete_confirm(this.props.item)}>
                     <DeleteIcon/>

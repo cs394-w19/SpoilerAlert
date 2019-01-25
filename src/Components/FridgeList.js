@@ -1,7 +1,7 @@
 import React from 'react';
 import FridgeItem from './FridgeItem'
 import AddFridgeItem from './AddFridgeItem';
-import DelConfirm from './DelConfirm.js'
+import DelConfirm from './DelFromFridgeConfirm.js'
 import AddShoppingItem from './AddShoppingItem.js'
 
 export default class FridgeList extends React.Component{
@@ -57,10 +57,12 @@ export default class FridgeList extends React.Component{
 
 
 	render() {
-		const productList = Object.entries(this.props.items).map(([product, date]) => (
+		console.log(this.props.items);
+		const productList = Object.entries(this.props.items).map(([product, data]) => (
 		<>
 		<FridgeItem item={product}
-					date={date}
+					quantity={data[0]}
+					date={data[1]}
 					toggleDelConfirm={this.toggleDelConfirm}
 					fillInput={this.fillInput}
 					></FridgeItem><br/>
