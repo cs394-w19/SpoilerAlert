@@ -97,6 +97,11 @@ class App extends Component {
 		this.addFridgeItem(item_name, days_til);
 	}
 
+	fridgeToShopping = (item_name) => {
+		this.delFridgeItem(item_name);
+		this.addShopItem(item_name);
+	}
+
 	delFridgeItem = (item) => {
 		let items_copy = this.state.fridgeItems;
 		delete items_copy[item];
@@ -165,7 +170,8 @@ class App extends Component {
 				current_page = <FridgeList items={this.state.fridgeItems} 
 											delItem={this.delFridgeItem} 
 											addItem={this.addFridgeItem}
-											checkExpiry={this.checkExpiry}/>
+											checkExpiry={this.checkExpiry}
+											toShopping={this.fridgeToShopping}/>
 				break;
 
 			case PageEnum.SHOPPING:
@@ -183,7 +189,8 @@ class App extends Component {
 				current_page = <FridgeList items={this.state.fridgeItems} 
 											delItem={this.delFridgeItem} 
 											addItem={this.addFridgeItem}
-											checkExpiry={this.checkExpiry}/>
+											checkExpiry={this.checkExpiry}
+											toShopping={this.fridgeToShopping}/>
 		}
 		
 		return (

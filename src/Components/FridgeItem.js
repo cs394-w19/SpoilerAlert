@@ -4,6 +4,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteRounded';
+import ListAddIcon from '@material-ui/icons/PlaylistAdd';
 
 //item name, days until expiration
 
@@ -69,7 +70,10 @@ export default class FridgeItem extends React.Component{
                 <ListItemSecondaryAction>
                   <IconButton onClick={() => this.delete_confirm(this.props.item)}>
                     <DeleteIcon/>
-		          </IconButton>
+		              </IconButton>
+                  <IconButton >
+                    <ListAddIcon onClick={() => this.props.fillInput(this.props.item)}/>
+                  </IconButton>
                 </ListItemSecondaryAction>
             </ListItem>
         	:
