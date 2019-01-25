@@ -100,21 +100,22 @@ class App extends Component {
 	}
 
 	delFridgeItem = (item, quantity) => {
-
 		let items_copy = this.state.fridgeItems;
 		let data = items_copy[item];
 		let item_quantity = data[0];
 		let item_date = data[1];
+
 		if(item_quantity == quantity) {
 			delete items_copy[item];
+			firebase.database().ref('fridge').child(item).remove();
 		}
 		else {
 			let new_quantity = item_quantity - quantity;
 			items_copy[item] = [new_quantity,item_date]
+			firebase.database().ref('fridge').child(item).update({0 : new_quantity});
 		}
+
 		this.setState({fridgeItems: items_copy})
-		
-		firebase.database().ref('fridge').child(item).remove();
   	}
 
   	addFridgeItem = (item_name, quantity, days_til) => {
