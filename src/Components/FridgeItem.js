@@ -15,6 +15,7 @@ export default class FridgeItem extends React.Component{
 			showEdit: false
 		};
 		this.toggleEdit = this.toggleEdit.bind(this);
+		this.edit_and_close = this.edit_and_close.bind(this);
 	}
 
     prettyDate(date) {
@@ -46,6 +47,17 @@ export default class FridgeItem extends React.Component{
     	return new_date;
     }
 
+    getDaysTilFromDate(date) {
+    	const one_day = 1000*60*60*24;
+		let curr_date = new Date();
+		let future_date = new Date(date);
+		let curr_date_ms = curr_date.getTime();
+		let future_date_ms = future_date.getTime();
+		let difference_ms = future_date_ms - curr_date_ms;
+		let days = Math.ceil(difference_ms/one_day);
+		return days;
+    }
+
     delete_confirm = (item) => {
 		this.props.toggleDelConfirm(item);
 	}
@@ -58,6 +70,11 @@ export default class FridgeItem extends React.Component{
 		this.setState({
 			showEdit: !this.state.showEdit
 		});
+	}
+
+	edit_and_close(old_item, old_quantity, new_item, new_quantity, new_days_til) {
+		this.props.editItem(this.props.item, this.props.quantity, new_item, new_quantity, new_days_til);
+		this.toggleEdit();
 	}
 
     render() {
@@ -83,12 +100,15 @@ export default class FridgeItem extends React.Component{
         	:
         	<><br/>
             <form>
-            	Item: <input type="text" defaultValue={this.props.item}/>
+            	Item: <input type="text" id="edit_fridge_item" defaultValue={this.props.item}/>
             </form><br/>
             <form>
-            	Expiration Date: <input type="date" value={this.getDateFromDaysTil(this.props.date)}/>
+            	Quantity: <input type="text" id="edit_fridge_quantity" defaultValue={this.props.quantity}/>
             </form><br/>
-            <button className="popup_button left" onClick={this.toggleEdit}>Done</button>
+            <form>
+            	Expiration Date: <input type="date" id="edit_fridge_date" defaultValue={this.getDateFromDaysTil(this.props.date)}/>
+            </form><br/>
+            <button className="popup_button left" onClick={() => this.edit_and_close(this.props.item, this.props.quantity, document.getElementById("edit_fridge_item").value, document.getElementById("edit_fridge_quantity").value, this.getDaysTilFromDate(document.getElementById("edit_fridge_date").value))}>Done</button>
             <button className="popup_button right" onClick={this.toggleEdit}>Cancel</button>
             </>
         }

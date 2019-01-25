@@ -63,6 +63,7 @@ export default class ShoppingList extends React.Component{
 			<ShoppingItem item={product} 
 						fillInput={this.fillInput}
 						addToFridge={this.props.addToFridge}
+						editItem={this.props.editItem}
 						toggleDelConfirm={this.toggleDelConfirm}></ShoppingItem><br/>
 			</>
 			)

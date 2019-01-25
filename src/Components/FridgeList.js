@@ -65,6 +65,7 @@ export default class FridgeList extends React.Component{
 					date={data[1]}
 					toggleDelConfirm={this.toggleDelConfirm}
 					fillInput={this.fillInput}
+					editItem={this.props.editItem}
 					></FridgeItem><br/>
 		</>
 			)

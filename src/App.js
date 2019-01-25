@@ -94,6 +94,16 @@ class App extends Component {
 		this.addFridgeItem(item_name, quantity, days_til);
 	}
 
+	editShoppingItem = (old_item, new_item) => {
+		this.delShopItem(old_item);
+		this.addShopItem(new_item);
+	}
+
+	editFridgeItem = (old_item, old_quantity, new_item, new_quantity, new_days_til) => {
+		this.delFridgeItem(old_item, old_quantity);
+		this.addFridgeItem(new_item, new_quantity, new_days_til);
+	}
+
 	fridgeToShopping = (item_name) => {
 		//this.delFridgeItem(item_name);
 		this.addShopItem(item_name);
@@ -183,6 +193,7 @@ class App extends Component {
 				current_page = <FridgeList items={this.state.fridgeItems} 
 											delItem={this.delFridgeItem} 
 											addItem={this.addFridgeItem}
+											editItem={this.editFridgeItem}
 											checkExpiry={this.checkExpiry}
 											toShopping={this.fridgeToShopping}/>
 				break;
@@ -191,6 +202,7 @@ class App extends Component {
 				current_page = <ShoppingList items={this.state.shoppingItems}
 											 addItem={this.addShopItem}
 											 delItem={this.delShopItem}
+											 editItem={this.editShoppingItem}
 											 addToFridge={this.shoppingToFridge}/>
 				break;
 

@@ -14,10 +14,16 @@ export default class ShoppingItem extends React.Component{
 			showEdit: false
 		};
 		this.toggleEdit = this.toggleEdit.bind(this);
+		this.edit_and_close = this.edit_and_close.bind(this);
 	}
 
 	delete_confirm = (item) => {
 		this.props.toggleDelConfirm(item);
+	}
+
+	edit_and_close(old_item, new_item) {
+		this.props.editItem(old_item, new_item);
+		this.toggleEdit();
 	}
 
 	toggleEdit() {
@@ -47,9 +53,9 @@ export default class ShoppingItem extends React.Component{
 			:
 			<><br/>
             <form>
-            	Item: <input type="text" defaultValue={this.props.item}/>
+            	Item: <input type="text" id="shopping_edit_item" defaultValue={this.props.item}/>
             </form><br/>
-            <button className="popup_button left" onClick={this.toggleEdit}>Done</button>
+            <button className="popup_button left" onClick={() => this.edit_and_close(this.props.item, document.getElementById("shopping_edit_item").value)}>Done</button>
             <button className="popup_button right" onClick={this.toggleEdit}>Cancel</button>
             </>
 		}
