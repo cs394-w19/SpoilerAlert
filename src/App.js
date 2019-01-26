@@ -3,8 +3,8 @@ import './App.css'
 import FridgeList from './Components/FridgeList.js'
 import ShoppingList from './Components/ShoppingList.js'
 import Settings from './Components/Settings.js'
-import Menu from './Components/Menu.js'
 import NewMenu from './Components/NewMenu.js'
+import NavBar from './Components/NavBar.js'
 import firebase from "firebase"
 
 var config = {
@@ -254,11 +254,14 @@ class App extends Component {
 		
 		return (
 			<div className="app">
-				<NewMenu className="menu" enum={PageEnum} 
-						 toggleMenu={i => this.toggleMenu(i)} 
-						 changePage={i => this.changePage(i)}
-						 state={this.state.showMenu}></NewMenu>
+				<NavBar className="navigation" 
+						enum={PageEnum} 
+						changePage={i => this.changePage(i)}></NavBar>
+						<br />
+
+				
 				{current_page}
+
 			</div>
 		);
 	}

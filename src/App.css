@@ -18,6 +18,10 @@
 
 }
 
+.navigation {
+  width: 100%;
+}
+
 .material-icons.add-button {
 	float: right;
 	padding-right: 1%;
