@@ -6,6 +6,7 @@ import Settings from './Components/Settings.js'
 import NewMenu from './Components/NewMenu.js'
 import NavBar from './Components/NavBar.js'
 import firebase from "firebase"
+import { timingSafeEqual } from 'crypto';
 
 var config = {
     apiKey: "AIzaSyDAnOBtoL7VHdV-VYd2Tcr0FLv5elDaN8A",
@@ -65,13 +66,15 @@ class App extends Component {
 	}
 
 	addShopItem = (item_name) => {
-		let items_copy = this.state.shoppingItems;
-		items_copy.push(item_name);
-		this.setState({shoppingItems: items_copy});
-
-		let shoppingRef = firebase.database().ref('shopping');
-		let writeLoc = shoppingRef.push();
-		writeLoc.set(item_name);
+		if (!this.state.shoppingItems.includes(item_name)) {
+			let items_copy = this.state.shoppingItems;
+			items_copy.push(item_name);
+			this.setState({shoppingItems: items_copy});
+			
+			let shoppingRef = firebase.database().ref('shopping');
+			let writeLoc = shoppingRef.push();
+			writeLoc.set(item_name);
+		}
 	}
 
 	delShopItem = (item) => {
@@ -95,13 +98,43 @@ class App extends Component {
 	}
 
 	editShoppingItem = (old_item, new_item) => {
-		this.delShopItem(old_item);
-		this.addShopItem(new_item);
+		if (old_item !== new_item) {
+			let new_items = this.state.shoppingItems.slice();
+			let index = new_items.indexOf(old_item);
+			new_items[index] = new_item;
+			this.setState({shoppingItems : new_items});
+
+			let shoppingRef = firebase.database().ref('shopping');
+			shoppingRef.orderByValue().equalTo(old_item).once('child_added', function(snapshot) {
+				snapshot.ref.set(new_item);
+			})
+		}
 	}
 
-	editFridgeItem = (old_item, old_quantity, new_item, new_quantity, new_days_til) => {
-		this.delFridgeItem(old_item, old_quantity);
-		this.addFridgeItem(new_item, new_quantity, new_days_til);
+	editFridgeItem = (old_item, new_item, new_quantity, new_days_til) => {
+		let old_quantity = this.state.fridgeItems[old_item][0];
+		let old_days_til = this.state.fridgeItems[old_item][1];
+		new_quantity = parseInt(new_quantity, 10);
+		new_days_til = parseInt(new_days_til, 10);
+
+		if (old_item === new_item && old_days_til === new_days_til) {
+			let new_items = {};
+			Object.entries(this.state.fridgeItems).map(([k, v]) => {
+				if (k === new_item) {
+					new_items[k] = [new_quantity, new_days_til];
+				}
+				else {
+					new_items[k] = v;
+				}
+				return null; //This is suppress a warning associated with map
+			});
+			this.setState({fridgeItems : new_items});
+			firebase.database().ref('fridge').child(old_item).update([new_quantity, old_days_til]);
+		}
+		else {
+			this.delFridgeItem(old_item, old_quantity);
+			this.addFridgeItem(new_item, new_quantity, new_days_til);
+		}
 	}
 
 	fridgeToShopping = (item_name) => {

@@ -57,7 +57,6 @@ export default class FridgeList extends React.Component{
 
 
 	render() {
-		console.log(this.props.items);
 		const productList = Object.entries(this.props.items).map(([product, data]) => (
 		<>
 		<FridgeItem item={product}

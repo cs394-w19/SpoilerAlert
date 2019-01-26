@@ -72,8 +72,8 @@ export default class FridgeItem extends React.Component{
 		});
 	}
 
-	edit_and_close(old_item, old_quantity, new_item, new_quantity, new_days_til) {
-		this.props.editItem(this.props.item, this.props.quantity, new_item, new_quantity, new_days_til);
+	edit_and_close(old_item, new_item, new_quantity, new_days_til) {
+		this.props.editItem(old_item, new_item, new_quantity, new_days_til);
 		this.toggleEdit();
 	}
 
@@ -108,7 +108,7 @@ export default class FridgeItem extends React.Component{
             <form>
             	Expiration Date: <input type="date" id="edit_fridge_date" defaultValue={this.getDateFromDaysTil(this.props.date)}/>
             </form><br/>
-            <button className="popup_button left" onClick={() => this.edit_and_close(this.props.item, this.props.quantity, document.getElementById("edit_fridge_item").value, document.getElementById("edit_fridge_quantity").value, this.getDaysTilFromDate(document.getElementById("edit_fridge_date").value))}>Done</button>
+            <button className="popup_button left" onClick={() => this.edit_and_close(this.props.item, document.getElementById("edit_fridge_item").value, document.getElementById("edit_fridge_quantity").value, this.getDaysTilFromDate(document.getElementById("edit_fridge_date").value))}>Done</button>
             <button className="popup_button right" onClick={this.toggleEdit}>Cancel</button>
             </>
         }
