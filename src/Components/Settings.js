@@ -84,6 +84,7 @@ class TextFields extends React.Component {
     const { classes } = this.props;
 
       return (
+        <div className="center"> Settings
         <div className="buttons-styling">
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
@@ -143,6 +144,8 @@ class TextFields extends React.Component {
         
       
       </div>
+      </div>
+
     );
   }
 }
