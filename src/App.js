@@ -129,31 +129,67 @@ class App extends Component {
   	}
 
   	addFridgeItem = (item_name, quantity, days_til) => {
-    	let new_items = {};
-    	let added = false;
-    	quantity = parseInt(quantity, 10);
-    	Object.entries(this.state.fridgeItems).map(([n, d]) => {
-      		new_items[n] = d;
-      		//return null //This is suppress a warning associated with map
-    	});
-		if (item_name in new_items) {
-			let cur_item = new_items[item_name];
-			let new_quantity = cur_item[0] + quantity;
-			let cur_date = cur_item[1];
-			if(days_til > cur_date)
-				new_items[item_name] = [new_quantity, days_til]; //only change expiry date if the newly purchased item has a later expiry
-			else
-				new_items[item_name] = [new_quantity, cur_date];
-		}
-		else
-			new_items[item_name] = [quantity, days_til];
+		quantity = parseInt(quantity, 10);
+		let self = this;
+		let new_quantity = 0;
+		let new_days_til = 0;
+		let itemIsNew = true;
+		let reorderNeeded = false;
 
+		// copy dict into array for easier sorting
+		let dictBuf = Object.keys(this.state.fridgeItems).map(function(curItem) {
+			if (curItem === item_name) {
+				itemIsNew = false;
 
-		this.setState({
-			fridgeItems: new_items
+				let curInfo = self.state.fridgeItems[curItem];
+				let old_quantity = curInfo[0]
+				let old_days_til = curInfo[1];
+
+				new_quantity = old_quantity + quantity;
+
+				// case 1: item exists, expiry changed -> reorder
+				if (days_til > old_days_til) {
+					reorderNeeded = true;
+					new_days_til = days_til;
+					return [curItem, [new_quantity, new_days_til]]
+				}
+				// case 2: item exists, expiry same -> no reorder
+				else {
+					new_days_til = old_days_til;
+					return [curItem, [new_quantity, new_days_til]]
+				}
+			}
+			else {
+				return [curItem, self.state.fridgeItems[curItem]];
+			}
 		});
 
-		firebase.database().ref('fridge').update({[item_name] : [quantity, days_til]});
+		// case 3: completely new item -> reorder
+		if (itemIsNew) {
+			new_quantity = quantity;
+			new_days_til = days_til;
+			dictBuf.push([item_name, [quantity, days_til]])
+			reorderNeeded = true;
+		}
+
+		if (reorderNeeded) {
+			dictBuf.sort(function(a, b) {
+				let days_til_a = a[1][1];
+				let days_til_b = b[1][1];
+				return days_til_a - days_til_b;
+			});
+		}
+
+		// copy back into dict
+		let new_items = {};
+		dictBuf.forEach(element => {
+			new_items[element[0]] = element[1];
+		});
+		
+		this.setState({ fridgeItems: new_items});
+
+		firebase.database().ref('fridge').update({
+			[item_name] : [new_quantity, new_days_til]});
   	}
 
   	checkExpiry = () => {
@@ -182,8 +218,6 @@ class App extends Component {
 			}
 		}
   	};
-
-	
 
 	render() {
 		let current_page = null;
