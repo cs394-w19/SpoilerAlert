@@ -28,7 +28,7 @@ class App extends Component {
 		let self = this; // needed in callbacks
 
 		let fridgeBuf = {}; 
-		firebase.database().ref('fridge').orderByValue().once('value', function(snapshot) {
+		firebase.database().ref('fridge').orderByChild('1').once('value', function(snapshot) {
 			snapshot.forEach((child) => {
 				fridgeBuf[child.key] = child.val();
 				self.setState({page : PageEnum.FRIDGE}); // retrieval is async, so set again to display landing page properly
