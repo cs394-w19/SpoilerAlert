@@ -28,9 +28,20 @@ export default class ShoppingItem extends React.Component{
 	}
 
 	toggleEdit() {
-		this.setState({
-			showEdit: !this.state.showEdit
-		});
+		if (!this.props.editingItem)
+		{
+			this.setState({
+				showEdit: true
+			});
+			this.props.toggleEditingItem(this.props.item, true);
+		}
+		else if (this.props.item === this.props.item_to_edit)
+		{
+			this.setState({
+				showEdit: false
+			});
+			this.props.toggleEditingItem(this.props.item, false);
+		}
 	}
 
 	render() {

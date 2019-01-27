@@ -13,11 +13,14 @@ export default class FridgeList extends React.Component{
 			showDelConfirm: false,
 			item_to_delete: null,
 			selectedItem: "",
+			editingItem: false,
+			item_to_edit: null
 		};
 		this.toggleAddItem = this.toggleAddItem.bind(this);
 		this.toggleMoveToShoppingPopup = this.toggleMoveToShoppingPopup.bind(this);
 		this.toggleDelConfirm = this.toggleDelConfirm.bind(this);
 		this.fillInput = this.fillInput.bind(this);
+		this.toggleEditingItem = this.toggleEditingItem.bind(this);
 	}	
 	
 	toggleAddItem() {
@@ -48,6 +51,23 @@ export default class FridgeList extends React.Component{
 		});
 	}
 
+	toggleEditingItem(item, toggle) {
+		if (toggle === true)
+		{
+			this.setState({
+				item_to_edit: item,
+				editingItem: true
+			});
+		}
+		else
+		{
+			this.setState({
+				item_to_edit: null,
+				editingItem: false
+			});
+		}
+	}
+
 	handleChange(event) {
 		this.setState({
 			selectedItem: event.target.value
@@ -65,6 +85,9 @@ export default class FridgeList extends React.Component{
 					toggleDelConfirm={this.toggleDelConfirm}
 					fillInput={this.fillInput}
 					editItem={this.props.editItem}
+					toggleEditingItem={this.toggleEditingItem}
+					editingItem={this.state.editingItem}
+					item_to_edit={this.state.item_to_edit}
 					></FridgeItem><br/>
 		</>
 			)
@@ -78,22 +101,22 @@ export default class FridgeList extends React.Component{
 				<div >{productList}</div>
 			{this.state.showAddItem ? 
 				<AddFridgeItem closePopup={this.toggleAddItem.bind(this)}
-								addItem={this.props.addItem}/>
+							   addItem={this.props.addItem}/>
 				: null
 			}
 			{this.state.showToShoppingPopup ? 
 				<AddShoppingItem inputValue={this.state.selectedItem} 
-								closePopup={this.toggleMoveToShoppingPopup.bind(this)} 
-								addItem={this.props.toShopping}
-								handleChange={this.handleChange} 
-								/>
+								 closePopup={this.toggleMoveToShoppingPopup.bind(this)} 
+								 addItem={this.props.toShopping}
+								 handleChange={this.handleChange}/>
 				: null
 			}
 
 			  {this.state.showDelConfirm ?
 				  <DelConfirm closePopup={this.toggleDelConfirm.bind(this)}
 							  delItem={this.props.delItem}
-							  item={this.state.item_to_delete} />
+							  item={this.state.item_to_delete}
+							  quantity={this.props.items[this.state.item_to_delete][0]}/>
 				  : null
 			  }
 		  </div>

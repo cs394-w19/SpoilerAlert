@@ -16,11 +16,14 @@ export default class ShoppingList extends React.Component{
 			showDelConfirm: false,
 			item_to_delete: null,
 			selectedItem: "",
+			editingItem: false,
+			item_to_edit: null
 		};
 		this.toggleAddItem = this.toggleAddItem.bind(this);
 		this.toggleMoveToFridgePopup = this.toggleMoveToFridgePopup.bind(this);
 		this.toggleDelConfirm = this.toggleDelConfirm.bind(this);
 		this.fillInput = this.fillInput.bind(this);
+		this.toggleEditingItem = this.toggleEditingItem.bind(this);
 	}	
 	
 	toggleAddItem() {
@@ -40,6 +43,23 @@ export default class ShoppingList extends React.Component{
 			showDelConfirm: !this.state.showDelConfirm,
 			item_to_delete: item
 		});
+	}
+
+	toggleEditingItem(item, toggle) {
+		if (toggle === true)
+		{
+			this.setState({
+				item_to_edit: item,
+				editingItem: true
+			});
+		}
+		else
+		{
+			this.setState({
+				item_to_edit: null,
+				editingItem: false
+			});
+		}
 	}
 
 	fillInput(name) {
@@ -64,7 +84,10 @@ export default class ShoppingList extends React.Component{
 						fillInput={this.fillInput}
 						addToFridge={this.props.addToFridge}
 						editItem={this.props.editItem}
-						toggleDelConfirm={this.toggleDelConfirm}></ShoppingItem><br/>
+						toggleDelConfirm={this.toggleDelConfirm}
+						toggleEditingItem={this.toggleEditingItem}
+						editingItem={this.state.editingItem}
+						item_to_edit={this.state.item_to_edit}></ShoppingItem><br/>
 			</>
 			)
 		);

@@ -14,7 +14,7 @@ export default class DelConfirm extends React.Component {
         <div className="popup_inner"> 
           <div className="title">Delete how many {this.props.item}?</div>
           <br />
-          <div>Quantity: <input type="number" id="quantity"/></div>
+          <div>Quantity: <input type="number" id="quantity" defaultValue={this.props.quantity}/></div>
           <br />
           <button className="popup_button left" onClick={() => this.del_and_close(this.props.item, document.getElementById('quantity').value)}>
             Ok

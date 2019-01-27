@@ -290,7 +290,7 @@ class App extends Component {
 				<NavBar className="navigation" 
 						enum={PageEnum} 
 						changePage={i => this.changePage(i)}></NavBar>
-						<br />
+						<br/>
 
 				
 				{current_page}
