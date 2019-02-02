@@ -14,6 +14,14 @@ export default class AddFridgeItem extends React.Component{
       
       this.props.closePopup();
     }
+    else if (quantity <= 0)
+    {
+      alert("Please enter a quantity greater than 0");
+    }
+    else
+    {
+      alert("Please fill in all the required fields");
+    }
     
     return
   }

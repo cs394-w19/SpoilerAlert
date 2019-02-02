@@ -113,6 +113,12 @@ class App extends Component {
 
 	editFridgeItem = (old_item, new_item, new_quantity, new_days_til) => {
 		let old_quantity = this.state.fridgeItems[old_item][0];
+		if (new_quantity <= 0)
+		{
+			this.delFridgeItem(old_item, old_quantity);
+			return;
+		}
+
 		let old_days_til = this.state.fridgeItems[old_item][1];
 		new_quantity = parseInt(new_quantity, 10);
 		new_days_til = parseInt(new_days_til, 10);

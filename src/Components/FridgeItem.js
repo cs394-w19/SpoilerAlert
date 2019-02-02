@@ -19,13 +19,25 @@ export default class FridgeItem extends React.Component{
 	}
 
     prettyDate(date) {
-        if (date === 1)
+        if (date === 0)
         {
-            return "Expiring in " + String(date) + " day.";
+            return "Expires today";
+        }
+        else if (date === -1)
+        {
+            return "Expired " + String(Math.abs(date)) + " day ago"
+        }
+        else if (date < 0)
+        {
+            return "Expired " + String(Math.abs(date)) + " days ago"
+        }
+        else if (date === 1)
+        {
+            return "Expiring in " + String(date) + " day";
         }
         else
         {
-            return "Expiring in " +  String(date) + " days.";
+            return "Expiring in " +  String(date) + " days";
         }
     }
 
@@ -114,7 +126,7 @@ export default class FridgeItem extends React.Component{
             	Item: <input type="text" id="edit_fridge_item" defaultValue={this.props.item}/>
             </form><br/>
             <form>
-            	Quantity: <input type="text" id="edit_fridge_quantity" defaultValue={this.props.quantity}/>
+            	Quantity: <input type="number" id="edit_fridge_quantity" defaultValue={this.props.quantity}/>
             </form><br/>
             <form>
             	Expiration Date: <input type="date" id="edit_fridge_date" defaultValue={this.getDateFromDaysTil(this.props.date)}/>
