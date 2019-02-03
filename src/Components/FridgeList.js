@@ -94,7 +94,7 @@ export default class FridgeList extends React.Component{
 		);
 
 		return (
-		  <div className="center"> Fridge List
+		  <div className="center">
 			<i className="material-icons add-button" onClick={this.toggleAddItem.bind(this)}>
 				add_box
 			</i>

@@ -3,6 +3,8 @@ import React from 'react';
 export default class AddFridgeItem extends React.Component{
   add_and_close = (name, quantity, date) => {
     if (name !== "" && date !== "" && String(quantity) !== "") {
+      name = name[0].toUpperCase() + name.slice(1);
+
       const one_day = 1000*60*60*24;
       let curr_date = new Date();
       let future_date = new Date(date);
@@ -10,6 +12,7 @@ export default class AddFridgeItem extends React.Component{
       let future_date_ms = future_date.getTime();
       let difference_ms = future_date_ms - curr_date_ms;
       let days = Math.ceil(difference_ms/one_day);
+
       this.props.addItem(name, quantity, days);
       
       this.props.closePopup();

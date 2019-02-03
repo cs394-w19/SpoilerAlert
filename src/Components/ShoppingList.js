@@ -93,7 +93,7 @@ export default class ShoppingList extends React.Component{
 		);
 
 	return (
-		<div className="center"> Shopping List 
+		<div className="center">
 			<i className="material-icons add-button" onClick={this.toggleAddItem.bind(this)}>
 			  add_box
 		 	</i>		

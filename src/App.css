@@ -28,7 +28,8 @@
 
 .material-icons.add-button {
 	float: right;
-	padding-right: 1%;
+  padding-right: 1%;
+  color: grey;
 }
 
 .list-item {
