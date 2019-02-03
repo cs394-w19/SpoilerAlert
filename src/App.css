@@ -10,7 +10,11 @@
 
 .buttons-styling {
   background-color: white;
-  padding-left: 17px;
+  padding-left: 97px;
+}
+
+.centerbutton {
+  padding-left: 20px;
 }
 
 .menu {
