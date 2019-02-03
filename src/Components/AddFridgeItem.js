@@ -3,8 +3,6 @@ import React from 'react';
 export default class AddFridgeItem extends React.Component{
   add_and_close = (name, quantity, date) => {
     if (name !== "" && date !== "" && String(quantity) !== "") {
-      name = name[0].toUpperCase() + name.slice(1);
-
       const one_day = 1000*60*60*24;
       let curr_date = new Date();
       let future_date = new Date(date);
