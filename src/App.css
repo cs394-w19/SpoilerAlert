@@ -45,7 +45,7 @@
 }
 
   .list-item.yellow {
-    background-color: lightyellow;
+    background-color: rgb(255, 191, 105);
   }
 
 .center {
@@ -64,7 +64,7 @@ li {
 
 .app {
 	display: block;
-	background-color: rgb(215, 204, 255);
+	background-color: rgb(203, 243, 240);
 }
 
 button {

@@ -19,7 +19,7 @@ export default class NavBar extends React.Component {
 	const { value } = this.state;
 
 	return (
-		<BottomNavigation
+    <BottomNavigation
 			value={value}
 			onChange={this.handleChange}
 			showLabels>
