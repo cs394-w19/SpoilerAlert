@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
-import './App.css'
-import FridgeList from './Components/FridgeList.js'
-import ShoppingList from './Components/ShoppingList.js'
-import Settings from './Components/Settings.js'
-import NewMenu from './Components/NewMenu.js'
-import NavBar from './Components/NavBar.js'
-import firebase from "firebase"
+import React, { Component } from 'react';
+import './App.css';
+import FridgeList from './Components/FridgeList.js';
+import ShoppingList from './Components/ShoppingList.js';
+import Settings from './Components/Settings.js';
+import NewMenu from './Components/NewMenu.js';
+import NavBar from './Components/NavBar.js';
+import firebase from "firebase";
+import StyleFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { timingSafeEqual } from 'crypto';
 
 var config = {
@@ -47,10 +48,28 @@ class App extends Component {
 			showMenu : false,
 			page : PageEnum.FRIDGE,
 			shoppingItems : shoppingBuf,
-			fridgeItems : fridgeBuf
+      fridgeItems: fridgeBuf,
+      isSignedIn: false
 		};
 	}
 
+  uiConfig = {
+    signInFlow: "popup",
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID
+    ],
+    callbacks: {
+      signInSuccessWithAuthResults: () => false
+    }
+  };
+
+
+  componentDidMount = () => {
+	firebase.auth().onAuthStateChanged(user => {
+		this.setState({ isSignedIn: !!user })
+		console.log(user);
+  })
+};
 	toggleMenu = () => {
 		this.setState({
 			showMenu: !this.state.showMenu
@@ -293,6 +312,18 @@ class App extends Component {
 		
 		return (
 			<div className="app">
+			{this.state.isSignedIn ? (
+             	 <div className="authentication">
+               		<div>Welcome {firebase.auth().currentUser.displayName}</div>
+               <button onClick={() => firebase.auth().signOut()}>Sign out</button>
+            </div>
+           ) : (
+                 <StyleFirebaseAuth
+                   uiConfig={this.uiConfig}
+                   firebaseAuth={firebase.auth()}
+                   />
+               )
+           }
 				<NavBar className="navigation" 
 						enum={PageEnum} 
 						changePage={i => this.changePage(i)}></NavBar>
