@@ -5,6 +5,8 @@ import AddItemFromShopping from './AddItemFromShopping'
 import DelConfirm from './DelFromShoppingConfirm.js'
 import data from '../data/shopping.json'
 import Button from '@material-ui/core/Button'
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 
 export default class ShoppingList extends React.Component{
@@ -93,10 +95,7 @@ export default class ShoppingList extends React.Component{
 		);
 
 	return (
-		<div className="center">
-			<i className="material-icons add-button" onClick={this.toggleAddItem.bind(this)}>
-			  add_box
-		 	</i>		
+		<div className="center">		
 		 	<div>{productList}</div>
 		 
 			{this.state.showAddItem ? 
@@ -118,6 +117,10 @@ export default class ShoppingList extends React.Component{
 							item={this.state.item_to_delete} />
 				: null
 			}
+			<Fab className="addButton" onClick={this.toggleAddItem} 
+				style={{backgroundColor: 'white', position: 'absolute', right: '0', bottom: '0', margin: '1em'}}>
+              <AddIcon />
+            </Fab>
 		</div>
 		)
 	}

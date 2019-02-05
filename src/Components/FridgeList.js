@@ -3,6 +3,8 @@ import FridgeItem from './FridgeItem'
 import AddFridgeItem from './AddFridgeItem';
 import DelConfirm from './DelFromFridgeConfirm.js'
 import AddShoppingItem from './AddShoppingItem.js'
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 export default class FridgeList extends React.Component{
 	constructor(props) {
@@ -21,13 +23,21 @@ export default class FridgeList extends React.Component{
 		this.toggleDelConfirm = this.toggleDelConfirm.bind(this);
 		this.fillInput = this.fillInput.bind(this);
 		this.toggleEditingItem = this.toggleEditingItem.bind(this);
+
+		this.fab = [
+			{
+				color: 'white',
+				className: 'addButton',
+				icon: <AddIcon />,
+			},
+		];
+
 	}	
 	
 	toggleAddItem() {
 		this.setState({
 			showAddItem: !this.state.showAddItem
 		});
-		alert("yeehaw");
 	}
 
 	fillInput(name) {
@@ -77,6 +87,7 @@ export default class FridgeList extends React.Component{
 
 
 
+
 	render() {
 		const productList = Object.entries(this.props.items).map(([product, data]) => (
 		<>
@@ -118,9 +129,10 @@ export default class FridgeList extends React.Component{
 							  quantity={this.props.items[this.state.item_to_delete][0]}/>
 				  : null
 			}
-			<i className="material-icons add-button" onClick={this.toggleAddItem.bind(this)}>
-				add_box
-			</i>
+			<Fab className="addButton" onClick={this.toggleAddItem} 
+				style={{backgroundColor: 'white', position: 'absolute', right: '0', bottom: '0', margin: '1em'}}>
+              <AddIcon />
+            </Fab>
 		  </div>
 		)
 	}

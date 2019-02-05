@@ -45,6 +45,7 @@ export default class AddFridgeItem extends React.Component{
             Done
             </button>
 	        <button className="popup_button right" onClick={this.props.closePopup}>Cancel</button>
+          <br />
         </div>
       </div>
 
