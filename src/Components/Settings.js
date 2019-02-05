@@ -89,7 +89,15 @@ class TextFields extends React.Component {
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
           id="standard-name"
-          label="Name"
+          label="First Name"
+          className={classes.textField}
+         // value={this.state.name}
+         // onChange={this.handleChange("name")}
+          margin="normal"
+        />
+        <TextField
+          id="standard-name"
+          label="Last Name"
           className={classes.textField}
          // value={this.state.name}
          // onChange={this.handleChange("name")}
@@ -128,23 +136,25 @@ class TextFields extends React.Component {
           helperText="Please select if you would like to receive notifications via SMS messages."
           margin="normal"
         >
+
           {answers.map(option => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
           ))}
+
         </TextField>
         
-</form>
-<div className = "centerbutton">
-        <Button variant="contained" className={classes.button}>
+
+</form>   
+
+      </div>
+            <Button variant="contained" className={classes.button}>
         Save
       </Button>
-</div>
-        
-      
       </div>
-      </div>
+     
+
 
     );
   }
