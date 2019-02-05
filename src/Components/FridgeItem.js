@@ -133,6 +133,7 @@ export default class FridgeItem extends React.Component{
             </form><br/>
             <button className="popup_button left" onClick={() => this.edit_and_close(this.props.item, document.getElementById("edit_fridge_item").value, document.getElementById("edit_fridge_quantity").value, this.getDaysTilFromDate(document.getElementById("edit_fridge_date").value))}>Done</button>
             <button className="popup_button right" onClick={this.toggleEdit}>Cancel</button>
+            <br/>
             </>
         }
 	    </>
