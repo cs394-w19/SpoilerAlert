@@ -9,6 +9,14 @@ import firebase from "firebase";
 import StyleFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { timingSafeEqual } from 'crypto';
 
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  typography: {
+  fontFamily: "Arial",
+  }
+});
+
 var config = {
     apiKey: "AIzaSyDAnOBtoL7VHdV-VYd2Tcr0FLv5elDaN8A",
     authDomain: "spoileralert-394.firebaseapp.com",
@@ -312,6 +320,7 @@ class App extends Component {
 		}
 		
 		return (
+			<MuiThemeProvider theme={theme}>
 			<div className="app">
 			{this.state.isSignedIn ? (
              	 <div className="authentication">
@@ -334,6 +343,7 @@ class App extends Component {
 				{current_page}
 
 			</div>
+			</MuiThemeProvider>
 		);
 	}
 }
