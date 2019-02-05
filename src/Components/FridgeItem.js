@@ -102,9 +102,9 @@ export default class FridgeItem extends React.Component{
 
     render() {
 
-      let item_class = "list-item";
+      let item_class = "list-item-fridge white";
       if (this.props.date <= 0){
-        item_class = "list-item yellow";
+        item_class = "list-item-fridge yellow";
       }
       return (
       	<>

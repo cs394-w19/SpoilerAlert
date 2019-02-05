@@ -87,7 +87,7 @@ export default class ShoppingList extends React.Component{
 						toggleDelConfirm={this.toggleDelConfirm}
 						toggleEditingItem={this.toggleEditingItem}
 						editingItem={this.state.editingItem}
-						item_to_edit={this.state.item_to_edit}></ShoppingItem><br/>
+						item_to_edit={this.state.item_to_edit}></ShoppingItem>
 			</>
 			)
 		);

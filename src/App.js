@@ -279,6 +279,7 @@ class App extends Component {
 
 	render() {
 		let current_page = null;
+		console.log(this.state.fridgeItems);
 
 		switch(this.state.page) {
 			case PageEnum.FRIDGE:

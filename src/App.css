@@ -1,3 +1,5 @@
+
+
 .settings-text {
   color: black;
   padding-left: 23px;
@@ -7,7 +9,6 @@
   font-size: 16px;
   background-color: white;
 }
-
 .buttons-styling {
   background-color: white;
   padding-left: 97px;
@@ -21,13 +22,18 @@
   text-align: center;
 }
 
-.menu {
-	float: left;
-
+body {
+  background-color: rgb(203, 243, 240);
 }
 
-.navigation {
+.menu {
+	float: left;
+}
+
+.navbar {
+  position: absolute;
   width: 100%;
+  bottom: 0;
 }
 
 .material-icons.add-button {
@@ -36,17 +42,28 @@
   color: grey;
 }
 
-.list-item {
+.list-item-fridge.white {
   text-align: left;
-  padding-left: 10px;
-  padding-top: 10px;
-  border-bottom: 1px solid lightgrey;
-  height: 60px;
+  /*border-bottom: 1px solid lightgrey;*/
+  background-color: white;
+  width: 98%;
+  margin: 1%;
+  
+
+}
+.list-item-fridge.yellow {
+  background-color: rgb(255, 191, 105);
+  width: 98%;
+  margin: 1%;
 }
 
-  .list-item.yellow {
-    background-color: rgb(255, 191, 105);
-  }
+.list-item-shopping {
+  background-color: white;
+  width: 98%;
+  margin: 1%;
+}
+
+
 
 .center {
 	display: block;
@@ -54,8 +71,8 @@
   font-size: 20px;
 	background-color: white;
 	position: absolute;
-	z-index: -1;
 	width: 100%;
+  background-color: rgb(203, 243, 240);
 }
 
 li {

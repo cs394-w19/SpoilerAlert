@@ -46,7 +46,7 @@ export default class ShoppingItem extends React.Component{
 
 	render() {
 
-	let item_class = "list-item";
+	let item_class = "list-item-shopping";
 		
 	return (
 		<>

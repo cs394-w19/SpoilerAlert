@@ -27,6 +27,7 @@ export default class FridgeList extends React.Component{
 		this.setState({
 			showAddItem: !this.state.showAddItem
 		});
+		alert("yeehaw");
 	}
 
 	fillInput(name) {
@@ -88,16 +89,14 @@ export default class FridgeList extends React.Component{
 					toggleEditingItem={this.toggleEditingItem}
 					editingItem={this.state.editingItem}
 					item_to_edit={this.state.item_to_edit}
-					></FridgeItem><br/>
+					></FridgeItem>
 		</>
 			)
 		);
 
 		return (
 		  <div className="center">
-			<i className="material-icons add-button" onClick={this.toggleAddItem.bind(this)}>
-				add_box
-			</i>
+			
 				<div >{productList}</div>
 			{this.state.showAddItem ? 
 				<AddFridgeItem closePopup={this.toggleAddItem.bind(this)}
@@ -118,7 +117,10 @@ export default class FridgeList extends React.Component{
 							  item={this.state.item_to_delete}
 							  quantity={this.props.items[this.state.item_to_delete][0]}/>
 				  : null
-			  }
+			}
+			<i className="material-icons add-button" onClick={this.toggleAddItem.bind(this)}>
+				add_box
+			</i>
 		  </div>
 		)
 	}
