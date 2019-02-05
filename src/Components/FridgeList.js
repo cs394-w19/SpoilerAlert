@@ -1,7 +1,6 @@
 import React from 'react';
 import FridgeItem from './FridgeItem'
 import AddFridgeItem from './AddFridgeItem';
-import DelConfirm from './DelFromFridgeConfirm.js'
 import AddShoppingItem from './AddShoppingItem.js'
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
@@ -12,7 +11,6 @@ export default class FridgeList extends React.Component{
 		this.state = {
 			showAddItem: false,
 			showToShoppingPopup: false,
-			showDelConfirm: false,
 			item_to_delete: null,
 			selectedItem: "",
 			editingItem: false,
@@ -20,7 +18,6 @@ export default class FridgeList extends React.Component{
 		};
 		this.toggleAddItem = this.toggleAddItem.bind(this);
 		this.toggleMoveToShoppingPopup = this.toggleMoveToShoppingPopup.bind(this);
-		this.toggleDelConfirm = this.toggleDelConfirm.bind(this);
 		this.fillInput = this.fillInput.bind(this);
 		this.toggleEditingItem = this.toggleEditingItem.bind(this);
 
@@ -55,13 +52,6 @@ export default class FridgeList extends React.Component{
 		console.log("toggle movetoshoppingpopup");
 	}
 
-	toggleDelConfirm(item) {
-		this.setState({
-			showDelConfirm: !this.state.showDelConfirm,
-			item_to_delete: item
-		});
-	}
-
 	toggleEditingItem(item, toggle) {
 		if (toggle === true)
 		{
@@ -85,17 +75,14 @@ export default class FridgeList extends React.Component{
 		});
 	  }
 
-
-
-
 	render() {
 		const productList = Object.entries(this.props.items).map(([product, data]) => (
 		<>
 		<FridgeItem item={product}
 					quantity={data[0]}
 					date={data[1]}
-					toggleDelConfirm={this.toggleDelConfirm}
 					fillInput={this.fillInput}
+					delItem={this.props.delItem}
 					editItem={this.props.editItem}
 					toggleEditingItem={this.toggleEditingItem}
 					editingItem={this.state.editingItem}
@@ -122,13 +109,6 @@ export default class FridgeList extends React.Component{
 				: null
 			}
 
-			  {this.state.showDelConfirm ?
-				  <DelConfirm closePopup={this.toggleDelConfirm.bind(this)}
-							  delItem={this.props.delItem}
-							  item={this.state.item_to_delete}
-							  quantity={this.props.items[this.state.item_to_delete][0]}/>
-				  : null
-			}
 			<Fab className="addButton" onClick={this.toggleAddItem} 
 				style={{backgroundColor: 'white', position: 'absolute', right: '0', bottom: '0', margin: '1em'}}>
               <AddIcon />

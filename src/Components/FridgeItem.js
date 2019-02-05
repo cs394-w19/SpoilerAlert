@@ -70,10 +70,6 @@ export default class FridgeItem extends React.Component{
 		return days;
     }
 
-    delete_confirm = (item) => {
-		this.props.toggleDelConfirm(item);
-	}
-
     prettyInfo(quantity, days_til) {
         return "Quantity: " + String(quantity) + ". " + this.prettyDate(days_til)
     }
@@ -112,7 +108,7 @@ export default class FridgeItem extends React.Component{
             <ListItem className={item_class} onClick={this.toggleEdit}>
                 <ListItemText primary={this.props.item} secondary={this.prettyInfo(this.props.quantity, this.props.date)} />
                 <ListItemSecondaryAction>
-                  <IconButton onClick={() => this.delete_confirm(this.props.item)}>
+                  <IconButton onClick={() => this.props.delItem(this.props.item, true)}>
                     <DeleteIcon/>
 		              </IconButton>
                   <IconButton >

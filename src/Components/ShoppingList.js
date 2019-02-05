@@ -2,7 +2,6 @@ import React from 'react'
 import ShoppingItem from './ShoppingItem'
 import AddShoppingItem from './AddShoppingItem'
 import AddItemFromShopping from './AddItemFromShopping'
-import DelConfirm from './DelFromShoppingConfirm.js'
 import data from '../data/shopping.json'
 import Button from '@material-ui/core/Button'
 import Fab from '@material-ui/core/Fab';
@@ -15,7 +14,6 @@ export default class ShoppingList extends React.Component{
 		this.state = {
 			showAddItem: false,
 			showToFridgePopup: false,
-			showDelConfirm: false,
 			item_to_delete: null,
 			selectedItem: "",
 			editingItem: false,
@@ -23,7 +21,6 @@ export default class ShoppingList extends React.Component{
 		};
 		this.toggleAddItem = this.toggleAddItem.bind(this);
 		this.toggleMoveToFridgePopup = this.toggleMoveToFridgePopup.bind(this);
-		this.toggleDelConfirm = this.toggleDelConfirm.bind(this);
 		this.fillInput = this.fillInput.bind(this);
 		this.toggleEditingItem = this.toggleEditingItem.bind(this);
 	}	
@@ -37,13 +34,6 @@ export default class ShoppingList extends React.Component{
 	toggleMoveToFridgePopup() {
 		this.setState({
 			showToFridgePopup: !this.state.showToFridgePopup
-		});
-	}
-
-	toggleDelConfirm(item) {
-		this.setState({
-			showDelConfirm: !this.state.showDelConfirm,
-			item_to_delete: item
 		});
 	}
 
@@ -86,7 +76,7 @@ export default class ShoppingList extends React.Component{
 						fillInput={this.fillInput}
 						addToFridge={this.props.addToFridge}
 						editItem={this.props.editItem}
-						toggleDelConfirm={this.toggleDelConfirm}
+						delItem={this.props.delItem}
 						toggleEditingItem={this.toggleEditingItem}
 						editingItem={this.state.editingItem}
 						item_to_edit={this.state.item_to_edit}></ShoppingItem>
@@ -111,12 +101,6 @@ export default class ShoppingList extends React.Component{
 				: null
 			}
 
-			{this.state.showDelConfirm ?
-				<DelConfirm closePopup={this.toggleDelConfirm.bind(this)}
-							delItem={this.props.delItem}
-							item={this.state.item_to_delete} />
-				: null
-			}
 			<Fab className="addButton" onClick={this.toggleAddItem} 
 				style={{backgroundColor: 'white', position: 'absolute', right: '0', bottom: '0', margin: '1em'}}>
               <AddIcon />

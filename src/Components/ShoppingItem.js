@@ -18,10 +18,6 @@ export default class ShoppingItem extends React.Component{
 		this.edit_and_close = this.edit_and_close.bind(this);
 	}
 
-	delete_confirm = (item) => {
-		this.props.toggleDelConfirm(item);
-	}
-
 	edit_and_close(old_item, new_item) {
 		this.props.editItem(old_item, new_item);
 		this.toggleEdit();
@@ -54,7 +50,7 @@ export default class ShoppingItem extends React.Component{
 			<ListItem className={item_class} onClick={this.toggleEdit}>
 				<ListItemText primary={this.props.item}/>
 				<ListItemSecondaryAction>
-					<IconButton onClick={() => this.delete_confirm(this.props.item)}>
+					<IconButton onClick={() => this.props.delItem(this.props.item, true)}>
 						<DeleteIcon />
 					</IconButton>
 					<IconButton onClick={() => this.props.fillInput(this.props.item)}>

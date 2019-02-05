@@ -5,6 +5,7 @@ import ShoppingList from './Components/ShoppingList.js';
 import Settings from './Components/Settings.js';
 import NewMenu from './Components/NewMenu.js';
 import NavBar from './Components/NavBar.js';
+import SnaccBar from './Components/SnaccBar.js';
 import firebase from "firebase";
 import StyleFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { timingSafeEqual } from 'crypto';
@@ -29,6 +30,14 @@ const PageEnum = {
 	FRIDGE : 1,
 	SHOPPING : 2,
 	SETTINGS : 3,
+}
+
+const SnaccEnum = {
+	NONE : 0,
+	DELFRIDGE : 1,
+	DELSHOP : 2,
+	FRIDGETOSHOP : 3,
+	SHOPTOFRIDGE : 4,
 }
 
 class App extends Component {
@@ -56,8 +65,13 @@ class App extends Component {
 			showMenu : false,
 			page : PageEnum.FRIDGE,
 			shoppingItems : shoppingBuf,
-      fridgeItems: fridgeBuf,
-      isSignedIn: false
+      		fridgeItems: fridgeBuf,
+      		isSignedIn: false,
+      		showSnaccBar: false,
+      		snacc_type: SnaccEnum.NONE,
+      		snacc_item: null,
+      		snacc_quantity: null,
+      		snacc_expiration: null
 		};
 	}
 
@@ -75,7 +89,6 @@ class App extends Component {
   componentDidMount = () => {
 	firebase.auth().onAuthStateChanged(user => {
 		this.setState({ isSignedIn: !!user })
-		console.log(user);
   })
 };
 	toggleMenu = () => {
@@ -104,7 +117,11 @@ class App extends Component {
 		}
 	}
 
-	delShopItem = (item) => {
+	delShopItem = (item, showSnacc) => {
+		this.setState({
+			snacc_item: item
+		});
+
 		let items_copy = this.state.shoppingItems;
 		let index = items_copy.indexOf(item)
 		if (index !== -1) {
@@ -116,12 +133,21 @@ class App extends Component {
 		shoppingRef.orderByValue().equalTo(item).once('child_added', function(snapshot) {
 			snapshot.ref.remove();
 		})
+
+		if (showSnacc)
+			this.toggleSnaccBar(SnaccEnum.DELSHOP, this.state.snacc_item);
 	}
 
 	shoppingToFridge = (item_name, quantity, days_til) => {
-		//add item from the shopping list to fridge....probably need to rename
-		this.delShopItem(item_name);
+		this.setState({
+			snacc_item: item_name,
+			snacc_quantity: quantity,
+		});
+
+		this.delShopItem(item_name, false);
 		this.addFridgeItem(item_name, quantity, days_til);
+			
+		this.toggleSnaccBar(SnaccEnum.SHOPTOFRIDGE, this.state.snacc_item);
 	}
 
 	editShoppingItem = (old_item, new_item) => {
@@ -139,10 +165,9 @@ class App extends Component {
 	}
 
 	editFridgeItem = (old_item, new_item, new_quantity, new_days_til) => {
-		let old_quantity = this.state.fridgeItems[old_item][0];
 		if (new_quantity <= 0)
 		{
-			this.delFridgeItem(old_item, old_quantity);
+			this.delFridgeItem(old_item, false);
 			return;
 		}
 
@@ -165,33 +190,47 @@ class App extends Component {
 			firebase.database().ref('fridge').child(old_item).update([new_quantity, old_days_til]);
 		}
 		else {
-			this.delFridgeItem(old_item, old_quantity);
+			this.delFridgeItem(old_item, false);
 			this.addFridgeItem(new_item, new_quantity, new_days_til);
 		}
 	}
 
 	fridgeToShopping = (item_name) => {
-		//this.delFridgeItem(item_name);
+		let data = this.state.fridgeItems[item_name];
+
+		this.setState({
+			snacc_item: item_name,
+			snacc_quantity: data[0],
+			snacc_expiration: data[1]
+		});
+
 		this.addShopItem(item_name);
+		this.delFridgeItem(item_name, false);
+
+		this.toggleSnaccBar(SnaccEnum.FRIDGETOSHOP, this.state.snacc_item);
 	}
 
-	delFridgeItem = (item, quantity) => {
+	delFridgeItem = (item, showSnacc) => {
 		let items_copy = this.state.fridgeItems;
 		let data = items_copy[item];
 		let item_quantity = data[0];
 		let item_date = data[1];
 
-		if(item_quantity == quantity) {
-			delete items_copy[item];
-			firebase.database().ref('fridge').child(item).remove();
-		}
-		else {
-			let new_quantity = item_quantity - quantity;
-			items_copy[item] = [new_quantity,item_date]
-			firebase.database().ref('fridge').child(item).update({0 : new_quantity});
-		}
+		this.setState({
+			snacc_item: item,
+			snacc_quantity: item_quantity,
+			snacc_expiration: item_date
+		});
 
-		this.setState({fridgeItems: items_copy})
+		delete items_copy[item];
+		firebase.database().ref('fridge').child(item).remove();
+
+		this.setState({
+			fridgeItems: items_copy,
+		});
+
+		if (showSnacc)
+			this.toggleSnaccBar(SnaccEnum.DELFRIDGE, this.state.snacc_item, this.state.snacc_quantity, this.state.snacc_expiration);
   	}
 
   	addFridgeItem = (item_name, quantity, days_til) => {
@@ -264,7 +303,6 @@ class App extends Component {
 		  if(value <= 0)
 		  	expired_items.push(key);
 		};
-		console.log(expired_items.length);
 		if(expired_items.length == 1)
 			alert(expired_items + " has expired.\nAdded to shopping list");
 		else if(expired_items.length > 1) {
@@ -280,14 +318,46 @@ class App extends Component {
 			for (let j = 0; j < Object.keys(this.state.fridgeItems).length; j++)
 			{
 				if (Object.keys(this.state.fridgeItems)[j] === expired_items[i])
-					this.delFridgeItem(Object.keys(this.state.fridgeItems)[j]);
+					this.delFridgeItem(Object.keys(this.state.fridgeItems)[j], false);
 			}
 		}
-  	};
+  	}
+
+  	toggleSnaccBar = (type, item, quantity, expiration) => {
+  		this.setState({
+  			snacc_type: type,
+  			showSnaccBar: !this.state.showSnaccBar
+  		});
+  	}
+
+  	snaccUndo = () => {
+  		switch(this.state.snacc_type) {
+  			case SnaccEnum.DELFRIDGE:
+  				this.addFridgeItem(this.state.snacc_item, this.state.snacc_quantity, this.state.snacc_expiration);
+  				break;
+
+			case SnaccEnum.DELSHOP:
+				this.addShopItem(this.state.snacc_item);
+				break;
+
+			case SnaccEnum.FRIDGETOSHOP:
+				this.delShopItem(this.state.snacc_item, false);
+				this.addFridgeItem(this.state.snacc_item, this.state.snacc_quantity, this.state.snacc_expiration);
+				break;
+
+			case SnaccEnum.SHOPTOFRIDGE:
+				this.delFridgeItem(this.state.snacc_item, false);
+				this.addShopItem(this.state.snacc_item);
+				break;
+  		}
+
+  		this.setState({
+  			showSnaccBar: !this.state.showSnaccBar
+  		});
+  	}
 
 	render() {
 		let current_page = null;
-		console.log(this.state.fridgeItems);
 
 		switch(this.state.page) {
 			case PageEnum.FRIDGE:
@@ -318,6 +388,49 @@ class App extends Component {
 											checkExpiry={this.checkExpiry}
 											toShopping={this.fridgeToShopping}/>
 		}
+
+		let current_snacc = null;
+
+		switch(this.state.snacc_type) {
+			case SnaccEnum.DELFRIDGE:
+				current_snacc = <SnaccBar
+									open={this.state.showSnaccBar}
+									handleClose={() => this.toggleSnaccBar}
+									snaccUndo={this.snaccUndo}
+									message={String(this.state.snacc_quantity + ' ' + this.state.snacc_item + " removed from fridge")}
+								/>
+				break;
+
+			case SnaccEnum.DELSHOP:
+				current_snacc = <SnaccBar
+									open={this.state.showSnaccBar}
+									handleClose={() => this.toggleSnaccBar}
+									snaccUndo={this.snaccUndo}
+									message={String(this.state.snacc_item + " removed from shopping list")}
+								/>
+				break;
+
+			case SnaccEnum.FRIDGETOSHOP:
+				current_snacc = <SnaccBar
+									open={this.state.showSnaccBar}
+									handleClose={() => this.toggleSnaccBar}
+									snaccUndo={this.snaccUndo}
+									message={String(this.state.snacc_item + " moved to shopping list")}
+								/>
+				break;
+
+			case SnaccEnum.SHOPTOFRIDGE:
+				current_snacc = <SnaccBar
+									open={this.state.showSnaccBar}
+									handleClose={() => this.toggleSnaccBar}
+									snaccUndo={this.snaccUndo}
+									message={String(this.state.snacc_quantity + ' ' + this.state.snacc_item + " moved to fridge")}
+								/>
+				break;
+
+			default:
+				current_snacc = null;
+		}
 		
 		return (
 			<MuiThemeProvider theme={theme}>
@@ -334,13 +447,18 @@ class App extends Component {
                    />
                )
            }
-				<NavBar className="navigation" 
-						enum={PageEnum} 
-						changePage={i => this.changePage(i)}></NavBar>
-						<br/>
+			<NavBar className="navigation" 
+					enum={PageEnum} 
+					changePage={i => this.changePage(i)}></NavBar>
+			<br/>
 
-				
-				{current_page}
+			{current_page}
+
+			{this.state.showSnaccBar ?
+				current_snacc
+				:
+				null
+			}
 
 			</div>
 			</MuiThemeProvider>
