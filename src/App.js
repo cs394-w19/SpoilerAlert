@@ -28,7 +28,7 @@ firebase.initializeApp(config);
 const PageEnum = {
 	FRIDGE : 1,
 	SHOPPING : 2,
-	SETTINGS : 3,
+	SETTINGS : 3
 }
 
 const SnaccEnum = {
@@ -42,7 +42,7 @@ const SnaccEnum = {
 class App extends Component {
 	constructor() {
 		super();
-
+		/*
 		let self = this; // needed in callbacks
 
 		let fridgeBuf = {}; 
@@ -59,13 +59,13 @@ class App extends Component {
 				shoppingBuf.push(child.val());
 			})
 		});
-
+		*/
 		this.state = {
 			showMenu : false,
 			page : PageEnum.FRIDGE,
-			shoppingItems : shoppingBuf,
-      		fridgeItems: fridgeBuf,
-      		isSignedIn: false,
+			shoppingItems : [],
+      		fridgeItems: {},
+			userID: "",
       		showSnaccBar: false,
       		snacc_type: SnaccEnum.NONE,
       		snacc_item: null,
@@ -87,9 +87,48 @@ class App extends Component {
 
   componentDidMount = () => {
 	firebase.auth().onAuthStateChanged(user => {
-		this.setState({ isSignedIn: !!user })
-  })
-};
+		let self = this;
+
+		this.setState({
+			userID : user ? user.uid : ""
+		})
+		if (user) {
+			let fridgePath = user.uid + '/fridge';
+			let shoppingPath = user.uid + '/shopping';
+			firebase.database().ref(fridgePath).once('value', function(snapshot) {
+				if (snapshot === null) {
+					// list empty, do nothing?
+				}
+				else {
+					let fridgeBuf = {}; 
+					firebase.database().ref(fridgePath).orderByChild('1').once('value', function(snapshot) {
+						snapshot.forEach((child) => {
+							fridgeBuf[child.key] = child.val();
+							self.setState({page : PageEnum.FRIDGE});
+						})
+						self.setState({ fridgeItems : fridgeBuf});
+					});
+		
+					let shoppingBuf = [];
+					firebase.database().ref(shoppingPath).once('value', function(snapshot) {
+						snapshot.forEach((child) => {
+							shoppingBuf.push(child.val());
+						})
+
+						self.setState({ shoppingItems : shoppingBuf});
+					});
+				}
+			});
+		}
+		else {
+			self.setState({ 
+				fridgeItems : {},
+				shoppingItems : [],
+				page: PageEnum.FRIDGE
+			});
+		}
+	});
+  }
 	toggleMenu = () => {
 		this.setState({
 			showMenu: !this.state.showMenu
@@ -110,7 +149,7 @@ class App extends Component {
 			items_copy.push(item_name);
 			this.setState({shoppingItems: items_copy});
 			
-			let shoppingRef = firebase.database().ref('shopping');
+			let shoppingRef = firebase.database().ref(this.state.userID + '/shopping');
 			let writeLoc = shoppingRef.push();
 			writeLoc.set(item_name);
 		}
@@ -128,7 +167,7 @@ class App extends Component {
 			this.setState({shoppingItems: items_copy});
 		}
 
-		let shoppingRef = firebase.database().ref('shopping');
+		let shoppingRef = firebase.database().ref(this.state.userID + '/shopping');
 		shoppingRef.orderByValue().equalTo(item).once('child_added', function(snapshot) {
 			snapshot.ref.remove();
 		})
@@ -156,7 +195,7 @@ class App extends Component {
 			new_items[index] = new_item;
 			this.setState({shoppingItems : new_items});
 
-			let shoppingRef = firebase.database().ref('shopping');
+			let shoppingRef = firebase.database().ref(this.state.userID + '/shopping');
 			shoppingRef.orderByValue().equalTo(old_item).once('child_added', function(snapshot) {
 				snapshot.ref.set(new_item);
 			})
@@ -186,7 +225,7 @@ class App extends Component {
 				return null; //This is suppress a warning associated with map
 			});
 			this.setState({fridgeItems : new_items});
-			firebase.database().ref('fridge').child(old_item).update([new_quantity, old_days_til]);
+			firebase.database().ref(this.state.userID + '/fridge').child(old_item).update([new_quantity, old_days_til]);
 		}
 		else {
 			this.delFridgeItem(old_item, false);
@@ -222,7 +261,7 @@ class App extends Component {
 		});
 
 		delete items_copy[item];
-		firebase.database().ref('fridge').child(item).remove();
+		firebase.database().ref(this.state.userID + '/fridge').child(item).remove();
 
 		this.setState({
 			fridgeItems: items_copy,
@@ -292,7 +331,7 @@ class App extends Component {
 		
 		this.setState({ fridgeItems: new_items});
 
-		firebase.database().ref('fridge').update({
+		firebase.database().ref(this.state.userID + '/fridge').update({
 			[item_name] : [new_quantity, new_days_til]});
   	}
 
@@ -381,11 +420,7 @@ class App extends Component {
 				break;
 
 			default:
-				current_page = <FridgeList items={this.state.fridgeItems} 
-											delItem={this.delFridgeItem} 
-											addItem={this.addFridgeItem}
-											checkExpiry={this.checkExpiry}
-											toShopping={this.fridgeToShopping}/>
+				current_page = <div>Oh no, something broke</div>
 		}
 
 		let current_snacc = null;
@@ -434,7 +469,7 @@ class App extends Component {
 		return (
 			<MuiThemeProvider theme={theme}>
 			<div className="app">
-			{this.state.isSignedIn ? (
+			{this.state.userID ? (
              	 <div className="authentication">
                		<div>Welcome {firebase.auth().currentUser.displayName}</div>
                <button onClick={() => firebase.auth().signOut()}>Sign out</button>
