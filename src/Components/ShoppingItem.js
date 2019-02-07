@@ -64,7 +64,7 @@ export default class ShoppingItem extends React.Component{
             	Item: <input type="text" id="shopping_edit_item" defaultValue={this.props.item}/>
             </form><br/>
             <button className="popup_button left" onClick={() => this.edit_and_close(this.props.item, document.getElementById("shopping_edit_item").value)}>Done</button>
-            <button className="popup_button right" onClick={this.toggleEdit}>Cancel</button>
+            <button className="popup_button right" onClick={this.toggleEdit}>Cancel</button><br/>
             </>
 		}
 		</>

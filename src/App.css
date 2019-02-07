@@ -121,14 +121,12 @@ button {
   float:left;
   margin-left: 10%;
   height: 25px;
-  box-shadow: 3px 3px #CAeff2;
 }
 
 .popup_button.right {
   float: right;
   margin-right: 10%;
   height: 25px;
-  box-shadow: 3px 3px #CAeff2;
 }
 
 .popup_button {
