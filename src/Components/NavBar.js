@@ -11,10 +11,12 @@ const styles = {
   	background: "#2EC4B6",
     color: "white",
     "&$selected": {
-      color: "#FF9F1C"
+      color: "#FFBF69"
     }
   },
-  selected: {}
+  selected: {
+  	color: "white"
+  }
 };
 
 class NavBar extends React.Component {
