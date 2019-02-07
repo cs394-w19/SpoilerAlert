@@ -9,12 +9,11 @@ import SnaccBar from './Components/SnaccBar.js';
 import firebase from "firebase";
 import StyleFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { timingSafeEqual } from 'crypto';
-
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   typography: {
-  fontFamily: "Arial",
+  fontFamily: "ABeeZee",
   }
 });
 
@@ -466,4 +465,4 @@ class App extends Component {
 	}
 }
 
-export default App;
+export default withStyles(theme)(App);
