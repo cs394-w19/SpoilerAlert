@@ -1,4 +1,7 @@
+.bottom {
 
+  padding-bottom: 20px;
+}
 .settings-text {
   color: black;
   padding-left: 23px;
@@ -9,8 +12,8 @@
   background-color: white;
 }
 .buttons-styling {
-  background-color: white;
-  padding-left: 93px;
+  background-color: none;
+  padding-left: 107px;
 }
 
 .centerbutton {

@@ -21,10 +21,16 @@ const styles = theme => ({
   },
   menu: {
     width: 200
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  input: {
+    display: 'none',
   }
 });
 
-/* const days = [
+const days = [
   {
     value: "one",
     label: "1"
@@ -53,7 +59,7 @@ const styles = theme => ({
     value: "seven",
     label: "7"
   }
-]; */
+];
 
 const answers = [
   {
@@ -65,6 +71,8 @@ const answers = [
     label: "no"
   }
 ];
+
+
 
 class TextFields extends React.Component {
   state = {
@@ -85,57 +93,28 @@ class TextFields extends React.Component {
 
       return (
         <div className="center">
-        <div className="buttons-styling">
+       <div className="buttons-styling">
       <form className={classes.container} noValidate autoComplete="off">
-        <TextField
-          id="standard-name"
-          label="First Name"
-          className={classes.textField}
-         // value={this.state.name}
-         // onChange={this.handleChange("name")}
-          margin="normal"
-        />
-        <TextField
-          id="standard-name"
-          label="Last Name"
-          className={classes.textField}
-         // value={this.state.name}
-         // onChange={this.handleChange("name")}
-          margin="normal"
-        />
-        <TextField
-          id="standard-name"
-          label="Phone Number"
-          className={classes.textField}
-          //value={this.state.name}
-          //onChange={this.handleChange("name")}
-          margin="normal"
-        />
-        <TextField
-          id="standard-name"
-          label="Email Address"
-          className={classes.textField}
-         // value={this.state.name}
-         // onChange={this.handleChange("name")}
-          margin="normal"
-        />
+      
         
 
         <TextField
           id="standard-select-currency"
           select
-          label="Select"
-          className={classes.textField}
-          value={this.state.currency}
-          onChange={this.handleChange("currency")}
+       //   label="Select"
+        className={classes.textField}
+        value={this.state.answers}
+         onChange={this.handleChange("answers")}
           SelectProps={{
             MenuProps: {
               className: classes.menu
             }
           }}
-          helperText="Please select if you would like to receive notifications via SMS messages."
+          helperText="Please select if you would like to receive email notifications."
           margin="normal"
         >
+
+
 
           {answers.map(option => (
             <MenuItem key={option.value} value={option.value}>
@@ -146,15 +125,44 @@ class TextFields extends React.Component {
         </TextField>
         
 
+         <TextField
+          id="standard-select-currency"
+          select
+     //    label="Select"
+        className={classes.textField}
+        value={this.state.days}
+         onChange={this.handleChange("days")}
+          SelectProps={{
+            MenuProps: {
+              className: classes.menu
+            }
+          }}
+          helperText="How many days in advance would you like to receive notifications?"
+          margin="normal"
+        >
+
+        
+
+          {days.map(option => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+
+        </TextField>
+
 </form>   
 
       </div>
-            <Button variant="contained" className={classes.button}>
+            <Button style={{maxWidth: '70px', maxHeight: '40px', minWidth: '30px', minHeight: '30px'}} variant="contained" className={classes.button}>
         Save
+      </Button>
+
+      <Button style={{maxWidth: '70px', maxHeight: '40px', minWidth: '30px', minHeight: '30px'}} variant="contained" className={classes.button}>
+        Logout
       </Button>
       </div>
      
-
 
     );
   }
