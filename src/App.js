@@ -95,14 +95,13 @@ class App extends Component {
 		this.setState({
 			userID : user ? user.uid : ""
 		})
+
 		if (user) {
 			let fridgePath = user.uid + '/fridge';
 			let shoppingPath = user.uid + '/shopping';
+			self.setState({ page: PageEnum.FRIDGE})
 			firebase.database().ref(fridgePath).once('value', function(snapshot) {
-				if (snapshot === null) {
-					self.setState({ page: PageEnum.FRIDGE});
-				}
-				else {
+				if (snapshot !== null) {
 					let fridgeBuf = {}; 
 					firebase.database().ref(fridgePath).orderByChild('1').once('value', function(snapshot) {
 						snapshot.forEach((child) => {
@@ -399,7 +398,7 @@ class App extends Component {
 
 	render() {
 		let current_page = null;
-
+		console.log(this.state.page)
 		switch(this.state.page) {
 			case PageEnum.FRIDGE:
 				current_page = <FridgeList items={this.state.fridgeItems} 
@@ -434,6 +433,7 @@ class App extends Component {
 
 		switch(this.state.snacc_type) {
 			case SnaccEnum.DELFRIDGE:
+				
 				current_snacc = <SnaccBar
 									open={this.state.showSnaccBar}
 									handleClose={() => this.toggleSnaccBar}
@@ -443,6 +443,7 @@ class App extends Component {
 				break;
 
 			case SnaccEnum.DELSHOP:
+				
 				current_snacc = <SnaccBar
 									open={this.state.showSnaccBar}
 									handleClose={() => this.toggleSnaccBar}
