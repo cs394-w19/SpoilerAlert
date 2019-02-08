@@ -44,7 +44,7 @@ const SnaccEnum = {
 class App extends Component {
 	constructor() {
 		super();
-		firebase.auth().signOut();
+		//firebase.auth().signOut();
 		/*
 		let self = this; // needed in callbacks
 
@@ -131,6 +131,12 @@ class App extends Component {
 		}
 	});
   }
+
+  	logout = () => {
+  		firebase.auth().signOut();
+  	}
+
+
 	toggleMenu = () => {
 		this.setState({
 			showMenu: !this.state.showMenu
@@ -418,7 +424,7 @@ class App extends Component {
 				break;
 
 			case PageEnum.SETTINGS:
-				current_page = <Settings/>
+				current_page = <Settings logout={this.logout}/>
 				break;
 
 			case PageEnum.HOME:
