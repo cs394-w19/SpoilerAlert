@@ -3,6 +3,7 @@ import './App.css';
 import FridgeList from './Components/FridgeList.js';
 import ShoppingList from './Components/ShoppingList.js';
 import Settings from './Components/Settings.js';
+import HomePage from './Components/HomePage.js';
 import NewMenu from './Components/NewMenu.js';
 import NavBar from './Components/NavBar.js';
 import SnaccBar from './Components/SnaccBar.js';
@@ -17,18 +18,19 @@ const theme = createMuiTheme({
   }
 });
 
-// var config = {
-//     apiKey: "AIzaSyDAnOBtoL7VHdV-VYd2Tcr0FLv5elDaN8A",
-//     authDomain: "spoileralert-394.firebaseapp.com",
-//     databaseURL: "https://spoileralert-394.firebaseio.com",
-//     storageBucket: "spoileralert-394.appspot.com",
-// };
-// firebase.initializeApp(config);
+var config = {
+    apiKey: "AIzaSyDAnOBtoL7VHdV-VYd2Tcr0FLv5elDaN8A",
+    authDomain: "spoileralert-394.firebaseapp.com",
+    databaseURL: "https://spoileralert-394.firebaseio.com",
+    storageBucket: "spoileralert-394.appspot.com",
+};
+firebase.initializeApp(config);
 
 const PageEnum = {
 	FRIDGE : 1,
 	SHOPPING : 2,
-	SETTINGS : 3
+	SETTINGS : 3,
+	HOME: 4
 }
 
 const SnaccEnum = {
@@ -42,6 +44,7 @@ const SnaccEnum = {
 class App extends Component {
 	constructor() {
 		super();
+		firebase.auth().signOut();
 		/*
 		let self = this; // needed in callbacks
 
@@ -62,7 +65,7 @@ class App extends Component {
 		*/
 		this.state = {
 			showMenu : false,
-			page : PageEnum.FRIDGE,
+			page : PageEnum.HOME,
 			shoppingItems : [],
       		fridgeItems: {},
 			userID: "",
@@ -73,7 +76,7 @@ class App extends Component {
       		snacc_expiration: null
 		};
 	}
-
+/*
   uiConfig = {
     signInFlow: "popup",
     signInOptions: [
@@ -83,7 +86,7 @@ class App extends Component {
       signInSuccessWithAuthResults: () => false
     }
   };
-
+*/
 
   componentDidMount = () => {
 	firebase.auth().onAuthStateChanged(user => {
@@ -97,7 +100,7 @@ class App extends Component {
 			let shoppingPath = user.uid + '/shopping';
 			firebase.database().ref(fridgePath).once('value', function(snapshot) {
 				if (snapshot === null) {
-					// list empty, do nothing?
+					self.setState({ page: PageEnum.FRIDGE});
 				}
 				else {
 					let fridgeBuf = {}; 
@@ -124,7 +127,7 @@ class App extends Component {
 			self.setState({ 
 				fridgeItems : {},
 				shoppingItems : [],
-				page: PageEnum.FRIDGE
+				page: PageEnum.HOME
 			});
 		}
 	});
@@ -419,6 +422,10 @@ class App extends Component {
 				current_page = <Settings/>
 				break;
 
+			case PageEnum.HOME:
+				current_page = <HomePage/>
+				break;
+
 			default:
 				current_page = <div>Oh no, something broke</div>
 		}
@@ -467,7 +474,8 @@ class App extends Component {
 		}
 		
 		return (
-			<MuiThemeProvider theme={theme}>
+			this.state.userID ?
+				<MuiThemeProvider theme={theme}>
 			<div className="app">
 			<NavBar className="navigation" 
 					enum={PageEnum} 
@@ -484,6 +492,9 @@ class App extends Component {
 
 			</div>
 			</MuiThemeProvider>
+				:
+				current_page
+			
 		);
 	}
 }
