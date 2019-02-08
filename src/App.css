@@ -101,7 +101,7 @@ button {
   z-index: 5;
   position: fixed;
   width: 100%;
-  height: 90%;
+  height: 100%;
   top: 0;
   left: 0;
   right: 0;
@@ -111,12 +111,9 @@ button {
 }
 
 .popup_inner {
-  position: absolute;
-  left: 25%;
-  right: 25%;
-  top: 25%;
-  bottom: 25%;
-  margin: auto;
+  width: 225px;
+  height: 350px;
+  margin: 35% auto;
   background: white;
 }
 
@@ -136,9 +133,9 @@ button {
   width: 32%;
   background-color: whitesmoke;
   border-radius: 20px;
-  border: 1px solid #2EC4B6;
+  border: 1px solid #FF9F1C;
 }
 
 .title {
-  color: rebeccapurple;
+  color: #FF9F1C;
 }
