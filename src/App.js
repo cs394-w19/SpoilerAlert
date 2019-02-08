@@ -17,13 +17,13 @@ const theme = createMuiTheme({
   }
 });
 
-var config = {
-    apiKey: "AIzaSyDAnOBtoL7VHdV-VYd2Tcr0FLv5elDaN8A",
-    authDomain: "spoileralert-394.firebaseapp.com",
-    databaseURL: "https://spoileralert-394.firebaseio.com",
-    storageBucket: "spoileralert-394.appspot.com",
-};
-firebase.initializeApp(config);
+// var config = {
+//     apiKey: "AIzaSyDAnOBtoL7VHdV-VYd2Tcr0FLv5elDaN8A",
+//     authDomain: "spoileralert-394.firebaseapp.com",
+//     databaseURL: "https://spoileralert-394.firebaseio.com",
+//     storageBucket: "spoileralert-394.appspot.com",
+// };
+// firebase.initializeApp(config);
 
 const PageEnum = {
 	FRIDGE : 1,
@@ -469,18 +469,6 @@ class App extends Component {
 		return (
 			<MuiThemeProvider theme={theme}>
 			<div className="app">
-			{this.state.userID ? (
-             	 <div className="authentication">
-               		<div>Welcome {firebase.auth().currentUser.displayName}</div>
-               <button onClick={() => firebase.auth().signOut()}>Sign out</button>
-            </div>
-           ) : (
-                 <StyleFirebaseAuth
-                   uiConfig={this.uiConfig}
-                   firebaseAuth={firebase.auth()}
-                   />
-               )
-           }
 			<NavBar className="navigation" 
 					enum={PageEnum} 
 					changePage={i => this.changePage(i)}></NavBar>
