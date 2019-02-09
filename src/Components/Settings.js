@@ -34,14 +34,16 @@ const styles = theme => ({
     display: 'none',
   },
   colorSwitchBase: {
-    color: '#D3D3D3' ,
+    color: '#D3D3D3',
     '&$colorChecked': {
       color: '#FF9F1C',
       '& + $colorBar': {
         backgroundColor: '#FFBF69',
       },
     },
-  }
+  },
+  colorBar: {},
+  colorChecked: {},
 });
 
 const days = [
@@ -118,17 +120,17 @@ class TextFields extends React.Component {
         <div className="center">
        <div className="buttons-styling">
       <form className={classes.container} noValidate autoComplete="off">
-      
-        
 
-        
-
-        <FormControlLabel label="Receive email notifications?" control={ <Switch defaultChecked={this.state.switch} onChange={this.switchChange} value="switch" 
-        classes={{
-                switchBase: styles.colorSwitchBase,
-                checked: styles.colorChecked,
-                bar: styles.colorBar,
-              }}/> } />
+        <FormControlLabel label="Receive email notifications?" 
+                          control={ <Switch defaultChecked={this.state.switch} 
+                                    onChange={this.switchChange} value="switch" 
+                                    classes={{
+                                      switchBase: classes.colorSwitchBase,
+                                      checked: classes.colorChecked,
+                                      bar: classes.colorBar,
+                                    }}
+                                    />} 
+        />
 
          <TextField
           id="standard-select-currency"
