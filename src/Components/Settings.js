@@ -95,108 +95,90 @@ const answers = [
 
 
 class Settings extends React.Component {
-  constructor() {
-      super();
-      
+  constructor(props) {
+      super(props);
+      console.log(this.props.settings);
       this.state = {
-      name: "",
-      age: "",
-      multiline: "",
-      currency: "",
-      switch: false
-    };  
-  }
-  handleChange = name => event => {
-    this.props.settings["threshold"] = event.target.value;
-    this.setState({ //This is to force a rerender, otherwise changes are not shown
-      age: "testing"
-    })
-  };
-
-  handleEdit = name => event => {
-    this.props.settings["email"] = event.target.value;
-    this.setState({ //This is to force a rerender, otherwise changes are not shown
-      name: "editing email"
-    })
+        notifications : this.props.settings["notifications"],
+        threshold : this.props.settings["threshold"],
+        email : this.props.settings["email"]
+      };  
   }
 
-  switchChange = () => {
-    this.props.settings["notifications"] = !this.props.settings["notifications"];
+  handleChangeNotifications = () => {
+    this.setState({ notifications : !this.state.notifications});
   };
+
+  handleChangeThreshold = name => event => {
+    this.setState({ threshold : event.target.value });
+  };
+
+  handleChangeEmail = name => event => {
+    this.setState({ email : event.target.value });
+  }
 
   render() {
     const { classes } = this.props;
-    let settings = this.props.settings;
-  
-      return (
-        <div className="center">
-       <div className="buttons-styling">
-      <form className={classes.container} noValidate autoComplete="off">
+    
+    return (
+      <div className="center">
+        <div className="buttons-styling">
+          <form className={classes.container} noValidate autoComplete="off">
+            <FormControlLabel label="Receive email notifications?" 
+                              control={<Switch defaultChecked={this.state.notifications} 
+                                                onChange={this.handleChangeNotifications} 
+                                                value="switch" 
+                                                classes={{
+                                                  switchBase: classes.colorSwitchBase,
+                                                  checked: classes.colorChecked,
+                                                  bar: classes.colorBar}}/>}/>
 
-        <FormControlLabel label="Receive email notifications?" 
-                          control={ <Switch defaultChecked={settings["notifications"]} 
-                                    onChange={this.switchChange} value="switch" 
-                                    classes={{
-                                      switchBase: classes.colorSwitchBase,
-                                      checked: classes.colorChecked,
-                                      bar: classes.colorBar,
-                                    }}
-                                    />} 
-        />
+            <TextField id="standard-select-currency"
+                        select 
+                        className={classes.textField}
+                        value={this.state.threshold}
+                        onChange={this.handleChangeThreshold("days")}
+                        SelectProps={{
+                          MenuProps: {
+                            className: classes.menu
+                          }
+                        }}
+                        helperText="How many days in advance would you like to receive notifications?"
+                        margin="normal">
+            {days.map(option => (<MenuItem key={option.value} value={option.value}>
+                                  {option.label}
+                                  </MenuItem>))}
+            </TextField>
 
-         <TextField
-          id="standard-select-currency"
-          select
-        className={classes.textField}
-        value={settings["threshold"]}
-         onChange={this.handleChange("days")}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu
-            }
-          }}
-          helperText="How many days in advance would you like to receive notifications?"
-          margin="normal"
-        >
-
-        
-
-          {days.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-
-        </TextField>
-        <TextField
-          id="standard-select-currency"
-          textField
-        className={classes.textField}
-        value={settings["email"]}
-         onChange={this.handleEdit()}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu
-            }
-          }}
-          helperText="Email address for notifications"
-          margin="normal"
-        >
-        </TextField>
-
-</form>   
-
-      </div>
-            <Button onClick={() => this.props.save(settings)} style={{maxWidth: '70px', maxHeight: '40px', minWidth: '30px', minHeight: '30px'}} variant="contained" className={classes.button}>
+            <TextField id="standard-select-currency"
+                        textField
+                        className={classes.textField}
+                        value={this.state.email}
+                        onChange={this.handleChangeEmail()}
+                        SelectProps={{
+                          MenuProps: {
+                            className: classes.menu
+                          }
+                        }}
+                        helperText="Email address for notifications"
+                        margin="normal">
+            </TextField>
+          </form>
+        </div>
+          
+        <Button onClick={() => this.props.save(this.state.email, this.state.notifications, this.state.threshold)} 
+                style={{maxWidth: '70px', maxHeight: '40px', minWidth: '30px', minHeight: '30px'}} 
+                variant="contained" 
+                className={classes.button}>
         Save
-      </Button>
-
-      <Button onClick={this.props.logout} style={{maxWidth: '70px', maxHeight: '40px', minWidth: '30px', minHeight: '30px'}} variant="contained" className={classes.button}>
+        </Button>
+        
+        <Button onClick={this.props.logout} 
+                style={{maxWidth: '70px', maxHeight: '40px', minWidth: '30px', minHeight: '30px'}} 
+                variant="contained" className={classes.button}>
         Logout
-      </Button>
+        </Button>
       </div>
-     
-
     );
   }
 }

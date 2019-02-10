@@ -44,6 +44,7 @@ const SnaccEnum = {
 class App extends Component {
 	constructor() {
 		super();
+		
 		//firebase.auth().signOut();
 		/*
 		let self = this; // needed in callbacks
@@ -195,7 +196,13 @@ class App extends Component {
 		}
 	}
 
-	saveSettings = (settings) => {
+	saveSettings = (email, notifications, threshold) => {
+		let settings = {
+			email,
+			notifications,
+			threshold
+		}
+
 		this.updateFirebaseSettings(settings);
 
 		this.setState({
