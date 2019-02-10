@@ -73,7 +73,8 @@ class App extends Component {
       		snacc_type: SnaccEnum.NONE,
       		snacc_item: null,
       		snacc_quantity: null,
-      		snacc_expiration: null
+			snacc_expiration: null,
+			settings : {}
 		};
 	}
 /*
@@ -121,6 +122,37 @@ class App extends Component {
 					});
 				}
 			});
+
+			let settingsPath = user.uid + '/settings';
+			let email = user.email;
+			let notifications = true;
+			let threshold = 0;
+			let setting = {
+				email,
+				notifications,
+				threshold
+			}
+
+			let settingsBuf = [];
+			firebase.database().ref(settingsPath).once('value', function (snapshot) {
+				snapshot.forEach((child) => {
+					settingsBuf.push(child.val());
+				})
+
+				console.log("settings buf length", settingsBuf.length);
+				if (settingsBuf.length === 3){
+					setting["email"] = settingsBuf[0];
+					setting["notifications"] = settingsBuf[1];
+					setting["threshold"] = settingsBuf[2];
+				} else {
+					console.log('need to instantiate settings');
+					firebase.database().ref(settingsPath).set(
+						setting
+					)
+				}
+				
+				self.setState({settings: setting});
+			})
 		}
 		else {
 			self.setState({ 
@@ -161,6 +193,21 @@ class App extends Component {
 			let writeLoc = shoppingRef.push();
 			writeLoc.set(item_name);
 		}
+	}
+
+	saveSettings = (settings) => {
+		this.updateFirebaseSettings(settings);
+
+		this.setState({
+			settings: settings
+		})
+	}
+
+	updateFirebaseSettings = (settings) => {
+		let settingsPath = this.state.userID + "/settings";
+		firebase.database().ref(settingsPath).set(
+			settings
+		)
 	}
 
 	delShopItem = (item, showSnacc) => {
@@ -404,7 +451,7 @@ class App extends Component {
 
 	render() {
 		let current_page = null;
-		console.log(this.state.page)
+
 		switch(this.state.page) {
 			case PageEnum.FRIDGE:
 				current_page = <FridgeList items={this.state.fridgeItems} 
@@ -424,7 +471,7 @@ class App extends Component {
 				break;
 
 			case PageEnum.SETTINGS:
-				current_page = <Settings logout={this.logout}/>
+				current_page = <Settings logout={this.logout} save={this.saveSettings} settings={this.state.settings}/>
 				break;
 
 			case PageEnum.HOME:

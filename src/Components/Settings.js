@@ -48,32 +48,36 @@ const styles = theme => ({
 
 const days = [
   {
-    value: "one",
-    label: "1"
+    value: 0,
+    label: "0 days"
   },
   {
-    value: "two",
-    label: "2"
+    value: 1,
+    label: "1 days"
   },
   {
-    value: "three",
-    label: "3"
+    value: 2,
+    label: "2 days"
   },
   {
-    value: "four",
-    label: "4"
+    value: 3,
+    label: "3 days"
   },
   {
-    value: "five",
-    label: "5"
+    value: 4,
+    label: "4 days"
   },
   {
-    value: "six",
-    label: "6"
+    value: 5,
+    label: "5 days"
   },
   {
-    value: "seven",
-    label: "7"
+    value: 6,
+    label: "6 days"
+  },
+  {
+    value: 7,
+    label: "7 days"
   }
 ];
 
@@ -90,39 +94,47 @@ const answers = [
 
 
 
-class TextFields extends React.Component {
-  state = {
-    name: "",
-    age: "",
-    multiline: "",
-    currency: "",
-    switch: false
+class Settings extends React.Component {
+  constructor() {
+      super();
+      
+      this.state = {
+      name: "",
+      age: "",
+      multiline: "",
+      currency: "",
+      switch: false
+    };  
+  }
+  handleChange = name => event => {
+    this.props.settings["threshold"] = event.target.value;
+    this.setState({ //This is to force a rerender, otherwise changes are not shown
+      age: "testing"
+    })
   };
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    });
-  };
+  handleEdit = name => event => {
+    this.props.settings["email"] = event.target.value;
+    this.setState({ //This is to force a rerender, otherwise changes are not shown
+      name: "editing email"
+    })
+  }
 
   switchChange = () => {
-
-    console.log("hi")
-    this.setState({
-      switch: !this.state.switch
-    });
+    this.props.settings["notifications"] = !this.props.settings["notifications"];
   };
 
   render() {
     const { classes } = this.props;
-
+    let settings = this.props.settings;
+  
       return (
         <div className="center">
        <div className="buttons-styling">
       <form className={classes.container} noValidate autoComplete="off">
 
         <FormControlLabel label="Receive email notifications?" 
-                          control={ <Switch defaultChecked={this.state.switch} 
+                          control={ <Switch defaultChecked={settings["notifications"]} 
                                     onChange={this.switchChange} value="switch" 
                                     classes={{
                                       switchBase: classes.colorSwitchBase,
@@ -135,9 +147,8 @@ class TextFields extends React.Component {
          <TextField
           id="standard-select-currency"
           select
-     //    label="Select"
         className={classes.textField}
-        value={this.state.days}
+        value={settings["threshold"]}
          onChange={this.handleChange("days")}
           SelectProps={{
             MenuProps: {
@@ -157,14 +168,26 @@ class TextFields extends React.Component {
           ))}
 
         </TextField>
-
-        
-
+        <TextField
+          id="standard-select-currency"
+          textField
+        className={classes.textField}
+        value={settings["email"]}
+         onChange={this.handleEdit()}
+          SelectProps={{
+            MenuProps: {
+              className: classes.menu
+            }
+          }}
+          helperText="Email address for notifications"
+          margin="normal"
+        >
+        </TextField>
 
 </form>   
 
       </div>
-            <Button style={{maxWidth: '70px', maxHeight: '40px', minWidth: '30px', minHeight: '30px'}} variant="contained" className={classes.button}>
+            <Button onClick={() => this.props.save(settings)} style={{maxWidth: '70px', maxHeight: '40px', minWidth: '30px', minHeight: '30px'}} variant="contained" className={classes.button}>
         Save
       </Button>
 
@@ -178,11 +201,11 @@ class TextFields extends React.Component {
   }
 }
 
-TextFields.propTypes = {
+Settings.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(TextFields);
+export default withStyles(styles)(Settings);
 
 /* export default class Settings extends React.Component{
 
