@@ -5,8 +5,12 @@ export default class AddShoppingItem extends React.Component{
   add_and_close = (name) => {
     if (name !== "") {
       this.props.addItem(name);
+      this.props.closePopup();
     }
-    this.props.closePopup();
+    else
+    {
+      alert("Please fill in all the required fields");
+    }
     return
   }
 
