@@ -105,7 +105,8 @@ export default class FridgeList extends React.Component{
 				<AddShoppingItem inputValue={this.state.selectedItem} 
 								 closePopup={this.toggleMoveToShoppingPopup.bind(this)} 
 								 addItem={this.props.toShopping}
-								 handleChange={this.handleChange}/>
+								 handleChange={this.handleChange}
+								 itemNameStatic={true}/>
 				: null
 			}
 

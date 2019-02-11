@@ -24,7 +24,7 @@ export default class AddFridgeItem extends React.Component{
         <div className="popup_inner"> 
           <div className="title">Add to Fridge</div>
           <br />
-          <div>Food Name: <input type="text" defaultValue={this.props.inputValue} onChange={this.handleChange} id="fridge_item_name"/></div>
+          <div>Food Name: <input type="text" defaultValue={this.props.inputValue} onChange={this.handleChange} id="fridge_item_name" disabled/></div>
           <br />
           <div>Quantity: <input type="text" id="quantity"/></div>
           <br />
