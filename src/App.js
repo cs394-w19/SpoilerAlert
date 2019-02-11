@@ -7,6 +7,7 @@ import HomePage from './Components/HomePage.js';
 import NewMenu from './Components/NewMenu.js';
 import NavBar from './Components/NavBar.js';
 import SnaccBar from './Components/SnaccBar.js';
+import SettingsSnaccBar from './Components/SettingsSnaccBar.js';
 import firebase from "firebase";
 import StyleFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { timingSafeEqual } from 'crypto';
@@ -39,6 +40,7 @@ const SnaccEnum = {
 	DELSHOP : 2,
 	FRIDGETOSHOP : 3,
 	SHOPTOFRIDGE : 4,
+	SETTINGS : 5,
 }
 
 class App extends Component {
@@ -207,7 +209,9 @@ class App extends Component {
 
 		this.setState({
 			settings: settings
-		})
+		});
+
+		this.toggleSnaccBar(SnaccEnum.SETTINGS);
 	}
 
 	updateFirebaseSettings = (settings) => {
@@ -527,6 +531,14 @@ class App extends Component {
 									handleClose={() => this.toggleSnaccBar}
 									snaccUndo={this.snaccUndo}
 									message={String(this.state.snacc_quantity + ' ' + this.state.snacc_item + " moved to fridge")}
+								/>
+				break;
+
+			case SnaccEnum.SETTINGS:
+				current_snacc = <SettingsSnaccBar
+									open={this.state.showSnaccBar}
+									handleClose={() => this.toggleSnaccBar}
+									message="Settings saved!"
 								/>
 				break;
 

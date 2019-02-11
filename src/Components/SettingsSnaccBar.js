@@ -1,9 +1,8 @@
 import React from 'react'
 import SnackBar from '@material-ui/core/Snackbar'
-import Button from '@material-ui/core/Button'
 import CloseIcon from '@material-ui/icons/Close'
 
-export default class SnaccBar extends React.Component {
+export default class SettingsSnaccBar extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -20,9 +19,6 @@ export default class SnaccBar extends React.Component {
 				autoHideDuration={4000}
 				action={[
 					<>
-						<Button key="undo" color="secondary" size="small" onClick={this.props.snaccUndo}>
-							UNDO
-						</Button>
 						<CloseIcon onClick={this.props.handleClose(0)}/>
 					</>
 				]}

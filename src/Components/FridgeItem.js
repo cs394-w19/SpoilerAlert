@@ -64,7 +64,7 @@ export default class FridgeItem extends React.Component{
 		let curr_date = new Date();
 		let future_date = new Date(date);
 		let curr_date_ms = curr_date.getTime();
-		let future_date_ms = future_date.getTime();
+		let future_date_ms = future_date.getTime() + curr_date.getHours()*3600000 + curr_date.getMinutes()*60000 + curr_date.getSeconds()*1000;
 		let difference_ms = future_date_ms - curr_date_ms;
 		let days = Math.ceil(difference_ms/one_day);
 		return days;
